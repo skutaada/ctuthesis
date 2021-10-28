@@ -113,25 +113,25 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \usepackage[pagewise]{lineno}
 \usepackage{lipsum,blindtext}
 \usepackage{mathrsfs} % provides \mathscr used in the ridiculous examples
+\usepackage{todonotes}
 
 \begin{document}
 
 \maketitle
 
-\chapter{Introduction}
-
-This thesis shows that \ldots
-
-\begin{figure}[!h]
-\rule{3cm}{3cm}
-\caption{Test}
-\end{figure}
-
-\part{My Party}
-
-\input{ctutest-1}
-
-\input{ctutest-2}
+\part{Methodology}
+\chapter{Dataset}
+The dataset for this work can be generated in two ways. The first is real-life drone shots mixed with point clouds from LiDAR mounted on top of a drone. The second is generating a dataset using a realistic virtual environment where a drone, camera and LiDAR are being emulated very close to their real-life counterparts. An advantage to this approach is that a great variety of environments can be chosen a lot of them often inaccessible otherwise (power plant, airport, snowy mountains out of season etc.). Therefore this approach will be chosen for the task.
+\section{Unreal Engine}
+Unreal Engine is a software tool used for creating realistic 3d environments, most often used as a video game engine.
+\todo{citation https://www.unrealengine.com/en-US/features} 
+It is written in C++ and open-source supporting a variety of pre-built environments and assets. For this work three diferent environments will be used for the creation of the dataset:
+\begin{itemize}
+	\item \todo[inline]{exact name. Snow}
+	\item \todo[inline]{exact name. Park}
+	\item \todo[inline]{exact name. City centre}
+\end{itemize}
+\todo{Pictures of the environments}
 
 
 \part{Your Party}
