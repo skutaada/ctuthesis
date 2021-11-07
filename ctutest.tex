@@ -108,8 +108,8 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \begin{document}
 
 \maketitle
-
-\part{Methodology}
+\chapter{Introduction}
+The goal of this thesis is to prove whether a usage of LiDAR data coupled with images from RGB is useful for the localization of UAVs in contrast to the usage of image data alone. The LiDAR and RGB camera will be mounted on top of the scanner UAV. All the measurements will be taken inside a virtual environment, with a realistic UAV and sensor simulation.
 \chapter{Sensors}
 \section{Coordinate systems}
 In order to correctly label the data for training, a position of the second drone in relation to the camera mounted on the first one is required. The API call in AirSim returns a position in relation to its starting point.\todo{insert picture showing the positions of the drones} Therefore a transformation from the starting point of the second drone to the camera mounted on the first one is required. We can write this transformation as follows:
@@ -155,7 +155,6 @@ where:
 	\item $f$ is focal length of the camera
 	\item $c_x$,$c_y$ are offsets on the image plane
 \end{itemize}
-\part{Task}
 \chapter{Dataset}
 The dataset for this work can be generated in two ways. The first is real-life drone shots mixed with point clouds from LiDAR mounted on top of a drone. The second is generating a dataset using a realistic virtual environment where a drone, camera and LiDAR are being emulated very close to their real-life counterparts. An advantage to this approach is that a great variety of environments can be chosen a lot of them often inaccessible otherwise (power plant, airport, snowy mountains out of season etc.). Therefore this approach will be chosen for the task.
 \section{Unreal Engine}
