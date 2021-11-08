@@ -109,7 +109,14 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 
 \maketitle
 \chapter{Introduction}
-The goal of this thesis is to prove whether a usage of LiDAR data coupled with images from RGB is useful for the localization of UAVs in contrast to the usage of image data alone. The LiDAR and RGB camera will be mounted on top of the scanner UAV. All the measurements will be taken inside a virtual environment, with a realistic UAV and sensor simulation.
+The goal of this thesis is to prove whether a usage of LiDAR data coupled with images from RGB is useful for the localization of UAVs in contrast to the usage of image data alone. The LiDAR and RGB camera will be mounted on top of the scanner UAV. All the measurements will be taken inside a virtual environment, with a realistic UAV and sensor simulation. The dataset will then be preprocessed and used as the input to a Convolutional neural network for the object detection. The preprocessing will be as following:
+\begin{itemize}
+	\item Coordinate transformation for the non-matching coordinate systems
+	\item Projection of 3d points into a 2d image
+	\item Using a Convolutional neural network to generate more points in a sparse LiDAR pointcloud
+\end{itemize}
+\todo{Infographic of the process}
+
 \chapter{Sensors}
 \section{Coordinate systems}
 In order to correctly label the data for training, a position of the second drone in relation to the camera mounted on the first one is required. The API call in AirSim returns a position in relation to its starting point.\todo{insert picture showing the positions of the drones} Therefore a transformation from the starting point of the second drone to the camera mounted on the first one is required. We can write this transformation as follows:
@@ -151,7 +158,7 @@ The transformation is then defined as follows:
 where:
 \begin{itemize}
 	\item $x'$ and $y'$ are pixel coordinate values on the image
-	\item $x$,$y$,$z$ are coordinate values of the camera
+	\item $x$,$y$,$z$ are coordinate values of a point to be transformed
 	\item $f$ is focal length of the camera
 	\item $c_x$,$c_y$ are offsets on the image plane
 \end{itemize}
