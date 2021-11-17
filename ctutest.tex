@@ -119,7 +119,7 @@ The goal of this thesis is to prove whether a usage of LiDAR data coupled with i
 \chapter{Convolutional neural networks}
 A convolutional neural network will be used in two problems in the thesis. First one is used on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one is used for object, int this case drone, detection, using RGB and RGBD data as the input.
 \section{Sparse to dense}
-Sparse to dense is a Convolutional neural network written in PyTorch. It predicts the depth measurements from sparse depth dataset. 
+Sparse to dense is a Convolutional neural network written in PyTorch. It predicts the depth measurements from sparse depth dataset.
 \chapter{Sensors}
 \section{Coordinate systems}
 In order to correctly label the data for training, a position of the second drone in relation to the camera mounted on the first one is required. The API call in AirSim returns a position in relation to its starting point.\todo{insert picture showing the positions of the drones} Therefore a transformation from the starting point of the second drone to the camera mounted on the first one is required. We can write this transformation as follows:
