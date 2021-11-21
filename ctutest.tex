@@ -104,6 +104,8 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \usepackage{lipsum,blindtext}
 \usepackage{mathrsfs} % provides \mathscr used in the ridiculous examples
 \usepackage{todonotes}
+\usepackage{amsmath}
+\usepackage{xspace}
 
 \begin{document}
 
@@ -119,7 +121,39 @@ The goal of this thesis is to prove whether a usage of LiDAR data coupled with i
 \chapter{Convolutional neural networks}
 A convolutional neural network will be used in two problems in the thesis. First one is used on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one is used for object, int this case drone, detection, using RGB and RGBD data as the input.
 \section{Sparse to dense}
-Sparse to dense is a Convolutional neural network written in PyTorch. It predicts the depth measurements from sparse depth dataset.
+\todo{Citations}
+Sparse to dense is a Convolutional neural network written in PyTorch. It predicts the depth measurements from sparse depth dataset. The size of the network is modifiable and can be chosen as training parameters. For the encoding and therefore input layers a ResNet-50 or ResNet-18 can be chosen, depending on the size of the input image for memory constraints. The decoding layers consist of 4 upsampling layers and a deconvolutional layer with either stride 2 or 3 or uprojection layer or upconvolutional layer as a choice for training. The default loss function is least absolute deviations also known as $L_1$ error:
+\begin{equation}
+	L_1=\sum_{i=1}^{n}|y_{true}-y_{predicted}|
+\end{equation}
+where:
+\begin{itemize}
+	\item n is batch size
+	\item $y_{true}$ are real depth values
+	\item $y_{predicted}$ are predicted depth values
+\end{itemize}
+The input to the network are RGBD images and the output is a depth map with the same dimensions as input. The depth input $D$ is sampled from the ground truth depth map $D^*$ with the following formula:
+\begin{equation}
+	D(i,j)=\begin{cases}
+		D^*(i,j),&\text{with probability}\ p\\
+		0,&\text{otherwise}
+	\end{cases}
+\end{equation}
+where:
+\begin{itemize}
+	\item $i,j$ are coordinates of the input image
+	\item $p=\frac{m}{n}$, where $m$ number of depth samples to be chosen at the start of training and $n$ is the total amount of available depth samples
+\end{itemize}
+During training several input data augmentations take place. These augmentations include:
+\begin{itemize}
+	\item Scaling the input image by a random number $s\in[1,1.5]$
+	\item Rotating the input image by a random degree $r\in[-5,5]$
+	\item Scaling the brightness, contrast and saturation of the RGB component of the image by a random number $k\in[0.6,1.4]$
+	\item Normalizing the RGB component of the image
+	\item Flipping the image horizontally with a 50\% chance
+\end{itemize}
+\todo{Image of the network arch}
+\section{YOLOv3}
 \chapter{Sensors}
 \section{Coordinate systems}
 In order to correctly label the data for training, a position of the second drone in relation to the camera mounted on the first one is required. The API call in AirSim returns a position in relation to its starting point.\todo{insert picture showing the positions of the drones} Therefore a transformation from the starting point of the second drone to the camera mounted on the first one is required. We can write this transformation as follows:
