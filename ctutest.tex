@@ -77,6 +77,7 @@
 \newtheorem{remark}[theorem]{Remark}
 
 \setlength{\parskip}{5ex plus 0.2ex minus 0.2ex}
+\graphicspath{{figures/}}
 
 % Abstract in Czech
 \begin{abstract-czech}
@@ -121,8 +122,13 @@ The goal of this thesis is to prove whether a usage of LiDAR data coupled with i
 \chapter{Convolutional neural networks}
 A convolutional neural network will be used in two problems in the thesis. First one is used on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one is used for object, int this case drone, detection, using RGB and RGBD data as the input.
 \section{Sparse to dense}
-\todo{Citations}
-Sparse to dense is a Convolutional neural network written in PyTorch. It predicts the depth measurements from sparse depth dataset. The size of the network is modifiable and can be chosen as training parameters. For the encoding and therefore input layers a ResNet-50 or ResNet-18 can be chosen, depending on the size of the input image for memory constraints. The decoding layers consist of 4 upsampling layers and a deconvolutional layer with either stride 2 or 3 or uprojection layer or upconvolutional layer as a choice for training. The default loss function is least absolute deviations also known as $L_1$ error:
+Sparse to dense is a Convolutional neural network written in PyTorch. It predicts the depth measurements from sparse depth dataset. The size of the network is modifiable and can be chosen as training parameters.
+\begin{figure}[h!]
+	\caption{Example of different network architectures available}
+	\includegraphics[width=\textwidth]{sparse2dense.png}
+	\centering
+\end{figure}\\
+For the encoding and therefore input layers a ResNet-50 or ResNet-18 can be chosen, depending on the size of the input image for memory constraints. The decoding layers consist of 4 upsampling layers and a deconvolutional layer with either stride 2 or 3 or uprojection layer or upconvolutional layer as a choice for training. The default loss function is least absolute deviations also known as $L_1$ error:
 \begin{equation}
 	L_1=\sum_{i=1}^{n}|y_{true}-y_{predicted}|
 \end{equation}
@@ -152,8 +158,8 @@ During training several input data augmentations take place. These augmentations
 	\item Normalizing the RGB component of the image
 	\item Flipping the image horizontally with a 50\% chance
 \end{itemize}
-\todo{Image of the network arch}
 \section{YOLOv3}
+
 \chapter{Sensors}
 \section{Coordinate systems}
 In order to correctly label the data for training, a position of the second drone in relation to the camera mounted on the first one is required. The API call in AirSim returns a position in relation to its starting point.\todo{insert picture showing the positions of the drones} Therefore a transformation from the starting point of the second drone to the camera mounted on the first one is required. We can write this transformation as follows:
