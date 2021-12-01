@@ -252,5 +252,9 @@ For the training purposes 5320 samples were taken using AirSim simulator. Each s
 	\item 640x640 1-channel sparse depth image from the LiDAR sensor
 	\item Label file containing ground truth bounding boxes values
 \end{itemize}
-This dataset was split 90\% training samples to 10\% validation samples.
+This dataset was split 90\% training samples to 10\% validation samples. 
+\section{Sparse to Dense}
+First the data were trained using Sparse to Dense neural network to receive dense depth image. The training was done for 15 epochs using batch size of 8. The backbone was Resnet18 and decoder was set to Deconv3. The network was pretrained on Kitti dataset. \todo{put images of the sparse2dense output}
+\section{Preprocessing}
+After the first network trained multiple methods of preprocessing were used.
 \end{document}
