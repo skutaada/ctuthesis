@@ -158,7 +158,32 @@ During training several input data augmentations take place. These augmentations
 	\item Normalizing the RGB component of the image
 	\item Flipping the image horizontally with a 50\% chance
 \end{itemize}
+The output of the network is a dense depth image with the dimensions of the input. Every pixel contains predicted depth measurement in meters. The output of the Sparse to Dense network will be used for further training later.
 \section{YOLOv3}
+\todo{citations}
+You only look once (YOLO) is a convolutional neural network model used mainly for object detection and recognition. The main advantage is its simplicity in comparison to similar convolutional neural networks, resulting in faster detection speeds. It belongs to the state of the art convolutional neural networks for object detection and recognition. The version used in this work is the third version YOLOv3. The backbone called Darknet53 consists of 53 convolutional layers. The original detector consists of 3 detection heads each responsible for detecting objects of various sizes.
+\begin{figure}[h]
+	\caption{YOLOv3 network architecture}
+	\centering
+	\includegraphics[width=\textwidth]{yolov3model.jpg}
+\end{figure}
+YOLOv3 takes $n$-channel images as the input and outputs are as following:
+\begin{itemize}
+	\item Offsets of the bounding box centers relative to the size of input image
+	\item Scales of the bounding boxes relative to their respective anchors
+	\item Objectness score, which dictates the confidence of object detection in the particular cell
+	\item Class score, which dictates the confidence of object recognition in the particular cell for each of the classes used during training
+\end{itemize}
+The loss function used during the training was sum squared error loss or $L_2$ error described as follows:
+\begin{equation}
+	L_2=\sum_{i=1}^{n}(y_{true}-y_{predicted})^2
+\end{equation}
+where:
+\begin{itemize}
+	\item $n$ is batch size
+	\item $y_{true}$ are ground truth bounding box values
+	\item $y_{predicted}$ are predicted bounding box values
+\end{itemize}
 
 \chapter{Sensors}
 \section{Coordinate systems}
@@ -220,4 +245,12 @@ It is written in C++ and open-source supporting a variety of pre-built environme
 Together \todo[inline]{exact number of pictures} pictures and labels were generated using two drones. One drone was equipped with RGB camera and LiDAR sensor and was responsible for taking the pictures and pointclouds from LiDAR. The second one was used as a model for drone detection.
 \section{AirSim}
 Open-source plugin for Unreal Engine called AirSim was used for the generation of the dataset. It simulates realistic flight motions of drones as well as seven types of sensors \todo{airsim zdroj}, including RGB camera and LiDAR used for this task. AirSim supports both a C++ API as well as Python API, latter which was used for controlling the motion and capturing the dataset. Location of the second drone was generated through API call, which produces a location of the drone in global coordinate system of the map, which is later transformed to the local coordinates of the first drone carrying the LiDAR and RGB sensors.\todo{Transformacna matica?}. The capturing drone traveled on each map on a 3d cube grid:\todo[inline]{Grafika kocky po ktorej lietal dron}
+\chapter{Training}
+For the training purposes 5320 samples were taken using AirSim simulator. Each sample consists of:
+\begin{itemize}
+	\item 640x640 3-channel RGB image from the camera
+	\item 640x640 1-channel sparse depth image from the LiDAR sensor
+	\item Label file containing ground truth bounding boxes values
+\end{itemize}
+This dataset was split 90\% training samples to 10\% validation samples.
 \end{document}
