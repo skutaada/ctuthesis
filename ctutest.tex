@@ -255,6 +255,23 @@ For the training purposes 5320 samples were taken using AirSim simulator. Each s
 This dataset was split 90\% training samples to 10\% validation samples. 
 \section{Sparse to Dense}
 First the data were trained using Sparse to Dense neural network to receive dense depth image. The training was done for 15 epochs using batch size of 8. The backbone was Resnet18 and decoder was set to Deconv3. The network was pretrained on Kitti dataset. \todo{put images of the sparse2dense output}
-\section{Preprocessing}
-After the first network trained multiple methods of preprocessing were used.
+\section{YOLOv3}
+After the first network trained multiple different options of input to the YOLOv3 networks were applied. These include:
+\begin{itemize}
+	\item Concatenating the direct output of Sparse to dense neural network with the RGB images creating a RGBD image
+	\item Manually altering the dense depth image values that were inaccurate (f.e. sky) a changing them to a high value
+	\item Filtering the parts of the dense depth image that were very sparse in the original sparse depth image
+	\item Using OpenCV library to directly impaint the sparse depth image
+	\item Using only the RGB image skipping the depth entirely
+\end{itemize}
+YOLOv3 PyTorch implementation was used for training. Further modifications were required to be made. Theo original implementation of YOLOv3 supports 3-channel RGB images as inputs. For the sake of this work a 4-channel RGB input option using H5 file system was implemented. The dataset consisted of drones of various sizes ranging from very small (few pixels) to very large closeups. Therefore 5 detection heads were implemented instead of the original 3. This ensured much higher detection confidence of smaller far away drones as well as bigger more close ones. The following parameters were used for training all inputs:
+\begin{itemize}
+	\item Number of epochs was set to 120
+	\item Batch size was set to 128
+	\item Size of the input images was 416x416x$n$, where $n\in\{3,4\}$
+	\item Learning rate was set to 0.001
+\end{itemize}
+The sample outputs were as following:
+\todo{add images}
+\chapter{Results and Conclusion}
 \end{document}
