@@ -119,6 +119,13 @@ The goal of this thesis is to prove whether a usage of LiDAR data coupled with i
 	\item Using a Convolutional neural network to generate more points in a sparse LiDAR pointcloud
 \end{itemize}
 \todo{Infographic of the process}
+\section{State of the art}
+\begin{itemize}
+	\item \textbf{Expandable YOLO}: A convolutional neural network model bases on YOLOv3 Darknet53 backbone and detection heads expanded to the 3rd dimension. The model can detect 3D bounding boxes from RGB images and stereo camera depth maps. In contrast to other more complex and robust 3D detection neural networks, this model aims to be usable in real-time enviroment by using a simpler structure
+	\item \textbf{YOLO3D}
+	\item \textbf{YOLOv5}
+	\item \textbf{Complex YOLO}
+\end{itemize}
 \chapter{Convolutional neural networks}
 A convolutional neural network will be used in two problems in the thesis. First one is used on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one is used for object, int this case drone, detection, using RGB and RGBD data as the input.
 \section{Sparse to dense}
