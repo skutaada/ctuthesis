@@ -107,6 +107,8 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \usepackage{todonotes}
 \usepackage{amsmath}
 \usepackage{xspace}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \begin{document}
 
@@ -191,7 +193,30 @@ where:
 	\item $y_{true}$ are ground truth bounding box values
 	\item $y_{predicted}$ are predicted bounding box values
 \end{itemize}
-
+\section{Image inpainting method based on the Fast Marching Method}
+Image inpainting is a method used for reconstructing missing values in the image. A one such method based on \todo{Citation} called Image inpainting method based in the Fast Marching Method will be presented in this section. A grayscale image will be used for simplification purposes.\\
+\\
+The grayscale value of a pixel to be inpainted is determined by the known neighboring pixel values. To compute grayscale value from one close pixel a following formula is used:
+\begin{equation}
+	I_q(p)=I(q)+\nabla I(q)(p-q)
+\end{equation}
+where:
+\begin{itemize}
+	\item $q$ is a pixel with known grayscale value
+	\item $p$ is a pixel with unknown grayscale value
+	\item $I(x)$ is a grayscale value at pixel $x$
+	\item $\nabla I(x)$ is a gradient value at pixel $x$
+\end{itemize}
+To get a final value for the unknown pixel a before mentioned fuction is applied on all known pixels in a specified region $B_{\varepsilon}(p)$ from the unknown pixel. The function is as following:
+\begin{equation}
+	I(p)=\frac{\sum_{q\in B_{\varepsilon}(p)}w(p,q)I_q(p)}{\sum_{q\in B_{\varepsilon}(p)}w(p,q)}
+\end{equation}
+where $w(p,q)$ is a weighting function designed for propagating sharpness of the image.\\
+\begin{figure}[h!]
+	\caption{Example of the inpainting technique}
+	\includegraphics[width=\textwidth]{inpaint_example.png}
+	\centering
+\end{figure}\\
 \chapter{Sensors}
 \section{Coordinate systems}
 In order to correctly label the data for training, a position of the second drone in relation to the camera mounted on the first one is required. The API call in AirSim returns a position in relation to its starting point.\todo{insert picture showing the positions of the drones} Therefore a transformation from the starting point of the second drone to the camera mounted on the first one is required. We can write this transformation as follows:
@@ -218,7 +243,12 @@ where:
 	\item $\textbf{0}^T$ is a 1x3 row vector of zeros
 \end{itemize}
 \section{Camera Model}
-For the creation of the bounding boxes used for training a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used.\todo{Picture of pinhole camera}
+For the creation of the bounding boxes used for training a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{pinhole.png}
+	\caption{Pinhole camera model}
+\end{figure}\\
 The transformation is then defined as follows:
 \begin{equation}
 	\begin{bmatrix}
@@ -261,7 +291,34 @@ For the training purposes 5320 samples were taken using AirSim simulator. Each s
 \end{itemize}
 This dataset was split 90\% training samples to 10\% validation samples. 
 \section{Sparse to Dense}
-First the data were trained using Sparse to Dense neural network to receive dense depth image. The training was done for 15 epochs using batch size of 8. The backbone was Resnet18 and decoder was set to Deconv3. The network was pretrained on Kitti dataset. \todo{put images of the sparse2dense output}
+First the data were trained using Sparse to Dense neural network to receive dense depth image. The training was done for 15 epochs using batch size of 8. The backbone was Resnet18 and decoder was set to Deconv3. The network was pretrained on Kitti dataset.
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{s2d_input.png}
+		\caption{Input image}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{s2d_output.png}
+		\caption{Output depth map}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{s2d_all.png}
+		\caption{All pointcloud points}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{s2d_select.png}
+		\caption{Selected pointcloud points}
+	\end{subfigure}
+	\caption{Sparse to dense training}
+\end{figure}
 \section{YOLOv3}
 After the first network trained multiple different options of input to the YOLOv3 networks were applied. These include:
 \begin{itemize}
