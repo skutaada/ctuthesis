@@ -109,6 +109,8 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \usepackage{xspace}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
 
 \begin{document}
 
@@ -118,7 +120,7 @@ The goal of this thesis is to prove whether a usage of LiDAR data coupled with i
 \begin{itemize}
 	\item Coordinate transformation for the non-matching coordinate systems
 	\item Projection of 3d points into a 2d image
-	\item Using a Convolutional neural network to generate more points in a sparse LiDAR pointcloud
+	\item Using a Convolutional neural network or other postprocessing methods to generate more points in a sparse LiDAR pointcloud
 	\item Fusing RGB images and dense LiDAR data into RGBD images
 \end{itemize}
 These data will be then used as a training and validation dataset for drone detection convolutional neural network. Different approaches in terms of preprocessing RGBD images will be utilized and compared with the other state-of-the-art techniques used in this field.
@@ -131,7 +133,11 @@ These data will be then used as a training and validation dataset for drone dete
 \section{State of the art}
 Drone detection is required for tracking and interception of other possibly misused drones. Most of the state-of-the-art techniques for drone detection are utilizing convolutional neural networks as a backbone for detection. They differ from each other mainly in the network architecture as well as types of input data. \newline
 \newline
-Common technique is 
+Expandable YOLO is modified convolutional network based on YOLOv3 architecture. It uses Darknet53 backbone and expands the detection heads to the third dimension as well as applies 3D Intersection over Union. The input is RGBD images taken from camera and RealSense depth camera. The network aims to simplify the network architecture for increase in processing speed.\\
+\\
+YOLO3D is a convolutional neural network that is based on YOLOv2 architecture, modifying its loss function with addition of yaw angle and 3D bounding boxes. The input consists of RGB images and birds eye pointcloud grid maps taken from LiDAR. The results show real-time performance on KITTI dataset.\\
+\\
+YOLOv5 is fifth iteration of the YOLO convolutional neural network architecture. The network provides different sizes based on the complexity of its task. Unlike its predecessors it is written entirely using PyTorch framework. 
 \chapter{Convolutional neural networks}
 A convolutional neural network will be used in two problems in the thesis. First one is used on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one is used for object, int this case drone, detection, using RGB and RGBD data as the input.
 \section{Sparse to dense}
@@ -246,8 +252,10 @@ where:
 	\item $\textbf{p}$ is a 3x1 translation column vector
 	\item $\textbf{0}^T$ is a 1x3 row vector of zeros
 \end{itemize}
+\section{LiDAR}
+
 \section{Camera Model}
-For the creation of the bounding boxes used for training a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used.
+For the creation of the bounding boxes used for training and for processing raw data from LiDAR sensor a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{pinhole.png}
@@ -373,7 +381,7 @@ An alternative algorithm for making sparse pointcloud into dense one was applied
 	\caption{Inpaint results}
 \end{figure}
 \section{YOLOv3}
-After the first network trained multiple different options of input to the YOLOv3 networks were applied. These include:
+Multiple different options of input to the YOLOv3 networks were applied. These include:
 \begin{itemize}
 	\item Concatenating the direct output of Sparse to dense neural network with the RGB images creating a RGBD image
 	\item Manually altering the dense depth image values that were inaccurate (f.e. sky) a changing them to a high value
@@ -388,7 +396,29 @@ YOLOv3 PyTorch implementation was used for training. Further modifications were 
 	\item Size of the input images was 416x416x$n$, where $n\in\{3,4\}$
 	\item Learning rate was set to 0.001
 \end{itemize}
-The sample outputs were as following:
-\todo{add images}
-\chapter{Results and Conclusion}
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{01640.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{02002.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{02167.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{02665.png}
+	\end{subfigure}
+	\caption{Sample YOLOv3 outputs}
+\end{figure}
+\chapter{Results}
+
 \end{document}
