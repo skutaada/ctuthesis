@@ -5,19 +5,11 @@
   \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
 }
 \providecommand{\href}[2]{#2}
-\begin{thebibliography}{TLJ92}
+\begin{thebibliography}{WZB91}
 
-\bibitem[Lei97]{cite:20}
-H.~Leibniz, \emph{Problems in abstract calculus}, {J}ournal of Real
-  Representation Theory \textbf{66} (1997), 302--339.
-
-\bibitem[SW05]{cite:10}
-X.~Suzuki and A.~Wu, \emph{Maximality methods in rational graph theory},
-  {A}rchives of the {I}ndian {M}athematical {S}ociety \textbf{20} (2005),
-  204--223.
-
-\bibitem[TLJ92]{cite:30}
-Z.~Thomas, H.~Lindemann, and A.~Jones, \emph{Subgroups for a random variable},
-  {J}ournal of Axiomatic {G}alois Theory \textbf{15} (1992), 520--528.
+\bibitem[WZB91]{cite:28}
+K.~Wu, B.~Zheng, and D.~Bhabha, \emph{Associative, co-additive, left-countable
+  domains of {M}axwell probability spaces and questions of reversibility},
+  {C}ambodian {M}athematical {T}ransactions \textbf{3} (1991), 78--89.
 
 \end{thebibliography}

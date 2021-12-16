@@ -12,7 +12,7 @@ def plot(file):
     vals = list(map(float, vals))
     x.append(vals[1])
     y.append(vals[2])
-  
+  print("Max value is:" + str(max(y))) 
   plt.plot(x, y)
   plt.grid(True)
   plt.ylim(0, 1)
@@ -29,7 +29,7 @@ def plot(file):
     plt.ylabel("Recall")
     plt.xlabel("Number of epochs")
     plt.title("Validation recall")
-  plt.savefig(file.split('.')[0]+".png", transparent=True)
+  plt.savefig(file.split('.')[0]+".svg", transparent=True)
     
 
 if __name__ == "__main__":
