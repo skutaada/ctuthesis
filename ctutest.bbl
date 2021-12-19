@@ -1,3 +1,4 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
 \providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
 \providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
 % \MRhref is called by the amsart/book/proc definition of \MR.
@@ -5,11 +6,29 @@
   \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
 }
 \providecommand{\href}[2]{#2}
-\begin{thebibliography}{WZB91}
+\begin{thebibliography}{KNF{\etalchar{+}}14}
 
-\bibitem[WZB91]{cite:28}
-K.~Wu, B.~Zheng, and D.~Bhabha, \emph{Associative, co-additive, left-countable
-  domains of {M}axwell probability spaces and questions of reversibility},
-  {C}ambodian {M}athematical {T}ransactions \textbf{3} (1991), 78--89.
+\bibitem[KNF{\etalchar{+}}14]{cite:2}
+Tom\'{a}\v{s} Krajn\'{\i}k, Mat\'{\i}as Nitsche, Jan Faigl, Petr Vanundefinedk,
+  Martin Saska, Libor P\v{r}eu\v{c}il, Tom Duckett, and Marta Mejail, \emph{A
+  practical multirobot localization system}, J. Intell. Robotics Syst.
+  \textbf{76} (2014), no.~3–4, 539–562.
+
+\bibitem[LHK16]{cite:4}
+Seoungjun Lee, Dongsoo Har, and Dongsuk Kum, \emph{Drone-assisted disaster
+  management: Finding victims via infrared camera and lidar sensor fusion},
+  2016 3rd Asia-Pacific World Congress on Computer Science and Engineering
+  (APWC on CSE), 2016, pp.~84--89.
+
+\bibitem[TBH{\etalchar{+}}19]{cite:3}
+Anam Tahir, Jari Böling, Mohammad-Hashem Haghbayan, Hannu~T. Toivonen, and
+  Juha Plosila, \emph{Swarms of unmanned aerial vehicles — a survey}, Journal
+  of Industrial Information Integration \textbf{16} (2019), 100106.
+
+\bibitem[VHS19]{cite:1}
+Matouš Vrba, Daniel Heřt, and Martin Saska, \emph{Onboard marker-less
+  detection and localization of non-cooperating drones for their safe
+  interception by an autonomous aerial system}, IEEE Robotics and Automation
+  Letters \textbf{4} (2019), no.~4, 3402--3409.
 
 \end{thebibliography}

@@ -115,28 +115,23 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 
 \maketitle
 \chapter{Introduction}
-The goal of this thesis was to prove whether a usage of LiDAR data coupled with images from RGB was useful for the localization of UAVs in contrast to the usage of image data alone. The LiDAR and RGB camera was be mounted on top of the scanner UAV. All the measurements were taken inside a virtual environment, with a realistic UAV and sensor simulation. The dataset was then be preprocessed and used as the input to a Convolutional neural network for the object detection. The preprocessing was as following:
+In this thesis a drone detection using neural networks from combined RGB camera and LiDAR data is studied. With the recent development of drone technology, drones have become more readily available to public and could only be expected to rise in popularity in the future. Drone detection is an important problem to tackle when it comes to tasks such as interception of uncooperative drones \cite{cite:1} or localization of drones in swarm \cite{cite:2} \cite{cite:3}. Furthermore Light detection and ranging (LiDAR) sensors mounted on drones have been utilized \cite{cite:4} and provide a viable sensor option. Therefore fusing camera and LiDAR sensor could be used for more accurate localization.\\
+\\
+The goal of this thesis was to examine whether a usage of LiDAR data coupled with RGB images from camera is useful for the localization of drones in contrast to the usage of image data alone.The LiDAR and RGB camera were mounted on top of the observer drone, which took pictures and pointclouds of the target drone. All the measurements were taken inside a virtual environment, with a realistic drone and sensor simulation. The dataset was then processed and used as the input for training and testing a Convolutional neural network for the object detection. The preprocessing was as following:
 \begin{itemize}
 	\item Coordinate transformation for the non-matching coordinate systems,
 	\item Projection of 3d points into a 2d image,
-	\item Using a Convolutional neural network or other postprocessing methods to generate more points in a sparse LiDAR pointcloud,
-	\item Fusing RGB images and dense LiDAR data into RGBD images.
+	\item Utilizing different processing methods on sparse LiDAR point cloud in order to make it more dense,
+	\item Fusing RGB images and LiDAR data into RGBD images.
 \end{itemize}
-These data were then used as a training and validation dataset for drone detection convolutional neural network. Different approaches in terms of preprocessing RGBD images were utilized and compared with the other state-of-the-art techniques used in this field.
+The output metrics were then compared with the RGB trained convolutional neural network metrics.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{intro_schema.png}
+	\includegraphics[width=\textwidth]{intro_schemav2.png}
 	\caption{Schema of the process.}
 \end{figure}
-\pagebreak
-\section{State of the art}
-Drone detection is required for tracking and interception of other possibly misused drones. Most of the state-of-the-art techniques for drone detection are utilizing convolutional neural networks as a backbone for detection. They differ from each other mainly in the network architecture as well as types of input data. \newline
-\newline
-Expandable YOLO is modified convolutional network based on YOLOv3 architecture. It uses Darknet53 backbone and expands the detection heads to the third dimension as well as applies 3D Intersection over Union. The input is RGBD images taken from camera and RealSense depth camera. The network aims to simplify the network architecture for increase in processing speed.\\
-\\
-YOLO3D is a convolutional neural network that is based on YOLOv2 architecture, modifying its loss function with addition of yaw angle and 3D bounding boxes. The input consists of RGB images and birds eye pointcloud grid maps taken from LiDAR. The results show real-time performance on KITTI dataset.\\
-\\
-YOLOv5 is fifth iteration of the YOLO convolutional neural network architecture. The network provides different sizes based on the complexity of its task. Unlike its predecessors it is written entirely using PyTorch framework. 
+\section{Related Work}
+Solving the problem of drone detection has been tackled in different ways. The main difference between them is the choice of sensor or sensors utilized. 
 \chapter{Convolutional neural networks}
 A convolutional neural network was used in two problems in the thesis. First one was used on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one was used for object, in this case drone, detection using RGB and RGBD data as the input.
 \section{Sparse to dense}
@@ -216,7 +211,7 @@ where:
 	\item $I(x)$ is a grayscale value at pixel $x$,
 	\item $\nabla I(x)$ is a gradient value at pixel $x$.
 \end{itemize}
-To get a final value for the unknown pixel a Equation \ref{eq:1} is applied on all known pixels in a specified region $B_{\varepsilon}(p)$ from the unknown pixel. The function is as following:
+To get a final value for the unknown pixel the Equation \ref{eq:1} is applied on all known pixels in a specified region $B_{\varepsilon}(p)$ from the unknown pixel. The function is as following:
 \begin{equation}
 	I(p)=\frac{\sum_{q\in B_{\varepsilon}(p)}w(p,q)I_q(p)}{\sum_{q\in B_{\varepsilon}(p)}w(p,q)},
 \end{equation}
@@ -226,6 +221,7 @@ where $w(p,q)$ is a weighting function designed for propagating sharpness of the
 	\includegraphics[width=\textwidth]{inpaint_example.png}
 	\centering
 \end{figure}\\
+
 \chapter{Sensors}
 \section{Coordinate systems}
 In order to correctly label the data for training, a position of the second drone in relation to the camera mounted on the first one is required. The API call in AirSim returns a position in relation to its starting point. Therefore a transformation from the starting point of the second drone to the camera mounted on the first one is required. This transformation is written as follows:
@@ -543,4 +539,21 @@ Summarizing all the metrics from different methods a observation can be made. In
 	\end{tabular}
 \caption{Summarized maximum values of different methods.}
 \end{table}
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{02001_inpaint.png}
+		\caption{Inpaint}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{02001_rgb.png}
+		\caption{RGB}
+	\end{subfigure}
+	\caption{Example of Precision improvement.}
+\end{figure}
+\bibliographystyle{amsalpha}
+\bibliography{ctutest}
 \end{document}
