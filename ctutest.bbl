@@ -8,6 +8,9 @@
 \providecommand{\href}[2]{#2}
 \begin{thebibliography}{KNF{\etalchar{+}}14}
 
+\bibitem[Kat18]{kathuria_2018}
+Ayoosh Kathuria, \emph{What's new in yolo v3?}, Apr 2018.
+
 \bibitem[KNF{\etalchar{+}}14]{cite:2}
 Tom\'{a}\v{s} Krajn\'{\i}k, Mat\'{\i}as Nitsche, Jan Faigl, Petr Vanundefinedk,
   Martin Saska, Libor P\v{r}eu\v{c}il, Tom Duckett, and Marta Mejail, \emph{A
@@ -20,10 +23,28 @@ Seoungjun Lee, Dongsoo Har, and Dongsuk Kum, \emph{Drone-assisted disaster
   2016 3rd Asia-Pacific World Congress on Computer Science and Engineering
   (APWC on CSE), 2016, pp.~84--89.
 
+\bibitem[MK18]{ma2018sparsetodense}
+Fangchang Ma and Sertac Karaman, \emph{Sparse-to-dense: Depth prediction from
+  sparse depth samples and a single image}, 2018.
+
+\bibitem[ope]{opencv}
+\emph{Camera calibration and 3d reconstruction}.
+
+\bibitem[RDGF16]{redmon2016look}
+Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi, \emph{You only
+  look once: Unified, real-time object detection}, 2016.
+
+\bibitem[RF18]{redmon2018yolov3}
+Joseph Redmon and Ali Farhadi, \emph{Yolov3: An incremental improvement}, 2018.
+
 \bibitem[TBH{\etalchar{+}}19]{cite:3}
 Anam Tahir, Jari Böling, Mohammad-Hashem Haghbayan, Hannu~T. Toivonen, and
   Juha Plosila, \emph{Swarms of unmanned aerial vehicles — a survey}, Journal
   of Industrial Information Integration \textbf{16} (2019), 100106.
+
+\bibitem[Tel04]{cite:5}
+Alexandru~Cristian Telea, \emph{An image inpainting technique based on the fast
+  marching method}, Journal of Graphics Tools \textbf{9} (2004), 23 -- 34.
 
 \bibitem[VHS19]{cite:1}
 Matouš Vrba, Daniel Heřt, and Martin Saska, \emph{Onboard marker-less
