@@ -8,6 +8,12 @@
 \providecommand{\href}[2]{#2}
 \begin{thebibliography}{KNF{\etalchar{+}}14}
 
+\bibitem[BGL{\etalchar{+}}18]{drone-det-wifi}
+Igor Bisio, Chiara Garibotto, Fabio Lavagetto, Andrea Sciarrone, and Sandro
+  Zappatore, \emph{Unauthorized amateur uav detection based on wifi statistical
+  fingerprint analysis}, IEEE Communications Magazine \textbf{56} (2018),
+  106--111.
+
 \bibitem[Kat18]{kathuria_2018}
 Ayoosh Kathuria, \emph{What's new in yolo v3?}, Apr 2018.
 
@@ -36,6 +42,12 @@ Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi, \emph{You only
 
 \bibitem[RF18]{redmon2018yolov3}
 Joseph Redmon and Ali Farhadi, \emph{Yolov3: An incremental improvement}, 2018.
+
+\bibitem[SYX{\etalchar{+}}18]{8337899}
+Xiufang Shi, Chaoqun Yang, Weige Xie, Chao Liang, Zhiguo Shi, and Jiming Chen,
+  \emph{Anti-drone system with multiple surveillance technologies:
+  Architecture, implementation, and challenges}, IEEE Communications Magazine
+  \textbf{56} (2018), no.~4, 68--74.
 
 \bibitem[TBH{\etalchar{+}}19]{cite:3}
 Anam Tahir, Jari Böling, Mohammad-Hashem Haghbayan, Hannu~T. Toivonen, and

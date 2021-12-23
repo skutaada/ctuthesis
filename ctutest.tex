@@ -111,6 +111,7 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \usepackage{subcaption}
 \usepackage{multirow}
 \usepackage{hyperref}
+\usepackage{pdfpages}
 
 \begin{document}
 
@@ -132,8 +133,13 @@ The output metrics were then compared with the RGB trained convolutional neural 
 	\caption{Schema of the process.}
 \end{figure}
 \section{Related Work}
-Solving the problem of drone detection has been tackled in different ways. The main difference between them is the choice of sensor or sensors utilized. 
-\chapter{Methodolology}
+Solving the problem of drone detection has been tackled in different ways. They mostly differ from the sensors that are utilized or by placing markers on flying drones.\\
+\\
+\begin{itemize}
+	\item \textbf{Static Sensors} Current State of the art drone detection techniques utilizing static sensors such as Radars, Acoustic sensors or Wi-Fi rely on pre-existing infrastructure. In \cite{8337899} Radar technology faces multiple challenges when detecting smaller aircrafts such as drones, because of their size and altitude of their flight, but shows promising results. When it comes to accoustic sensors, sound of the drone can be a very good source of information but depends heavily on the ambient sound of its environment\cite{8337899}. In \cite{drone-det-wifi} drones are detected using Wi-FI packets that are sent between the drone and its user. This method relies on the fact that most commercially available drones utilize Wi-Fi packets when it comes to communication with the end user. Only presence of the drone in the vicinity can be achieved and not its exact location.
+	\item \textbf{Camera} RGB camera provides a more lightweight and cheap alternative to static sensors. Due to popularity and development of Convolutional Neural Networks 
+\end{itemize}
+\chapter{Methodology}
 In this chapter various methods used in this thesis are discussed. A video game engine Unreal Engine\footnote{\url{https://www.unrealengine.com}}paired with plugin AirSim\footnote{\url{https://microsoft.github.io/AirSim/}} was used for simulating real-life environments and for generating the dataset. An image inpainting technique was used as an option for transforming sparse LiDAR pointcloud into a dense one. A convolutional neural network was used in two problems in the thesis. First one was on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one was used for object, in this case drone, detection using RGB and RGBD data as the input.
 \section{Sparse to dense} \label{s2d}
 Sparse to dense is a Convolutional neural network written in PyTorch. \cite{ma2018sparsetodense} It predicts the depth measurements from sparse depth dataset. The size of the network is modifiable and can be chosen as training parameters.
@@ -174,7 +180,6 @@ During training several input data augmentations take place. These augmentations
 \end{itemize}
 The output of the network is a dense depth image with the dimensions of the input. Every pixel contains predicted depth measurement in meters. The output of the Sparse to Dense network will be used for further training later.
 \section{YOLOv3}
-\todo{citations}
 You only look once (YOLO) is a convolutional neural network model used mainly for object detection and recognition\cite{redmon2016look}. The main advantage is its simplicity in comparison to similar convolutional neural networks, resulting in faster detection speeds. It belongs to the state of the art convolutional neural networks for object detection and recognition. The version used in this work is the third version YOLOv3\cite{redmon2018yolov3}. The backbone called Darknet53 consists of 53 convolutional layers. The original detector consists of 3 detection layers each responsible for detecting objects of various sizes. 
 \begin{figure}[h]
 	\caption{YOLOv3 network architecture. Taken from \cite{kathuria_2018}}
@@ -284,7 +289,7 @@ where:
 	\item $\textbf{p}$ is a 3x1 translation column vector,
 	\item $\textbf{0}^T$ is a 1x3 row vector of zeros.
 \end{itemize}
-\section{Camera Model}
+\section{Camera Model} \label{sec:camera-model}
 For the creation of the bounding boxes used for training and for processing raw data from LiDAR sensor a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used.
 \begin{figure}[h]
 	\centering
@@ -310,7 +315,7 @@ where:
 	\item $c_x$,$c_y$ are offsets on the image plane.
 \end{itemize}
 In order to transform the point from world coordinates $X_w,Y_w,Z_w$ to the coordinate system of the camera a following transformation needs to be applied:
-\begin{equation}
+\begin{equation} \label{eq:3}
 	\begin{bmatrix}
 		X_c\\
 		Y_c\\
@@ -347,7 +352,7 @@ Unreal Engine is a software tool used for creating realistic 3d environments, mo
 \end{figure}
 Together 5320 pictures and labels were generated using two drones. Observer drone was equipped with RGB camera and LiDAR sensor and was responsible for taking the pictures and pointclouds from LiDAR. The target drone was used as a model for drone detection.
 \subsection{AirSim}
-Open-source plugin for Unreal Engine called AirSim was used for the generation of the dataset. It simulates realistic flight motions of drones as well as seven types of sensors, including RGB camera and LiDAR used for this task. AirSim supports both a C++ API as well as Python API, latter which was used for controlling the motion and capturing the dataset. Location of the second drone was generated through API call, which produces a location of the drone in global coordinate system of the map, which is later transformed to the local coordinates of the first drone carrying the LiDAR and RGB sensors using Equation \ref{eq:2}. The capturing drone traveled on each map on a 3D cube grid.
+Open-source plugin for Unreal Engine called AirSim was used for the generation of the dataset. It simulates realistic flight motions of drones as well as seven types of sensors, including RGB camera and LiDAR used for this task. AirSim supports both a C++ API as well as Python API, latter which was used for controlling the motion and capturing the dataset. Location of the second drone was generated through API call, which produces a location of the drone in local coordinates relative to its starting point, which is later transformed to the local coordinates of the first drone carrying the LiDAR and RGB sensors using \autoref{eq:3} and \autoref{eq:2}. The bounding box required for the Convolutional neural network was generated the same way but the edge points of 3D bounding box were transformed using \autoref{eq:3} and \autoref{eq:2}. The bounding box dimensions were set to $(0.6, 1.0, 0.3)$. The LiDAR pointcloud was generated via API call, which returned 3D pointcloud in relation to the observer drone. Therefore transformation \autoref{eq:3} and \autoref{eq:2} were utilized. The capturing drone traveled on each map on a 3D cube grid.
 \begin{figure}
 	\centering
 	\begin{subfigure}[b]{0.3\textwidth}
@@ -540,8 +545,20 @@ From the results Raw RGBD offers the best improvement in terms of mAP by 7\%. Ev
 		time{[}s{]} & 0.0610                                             & 0.5424                                                 & 0.0669                                                         & 0.0759                                                                  & \textbf{0.0390} \\ \hline
 	\end{tabular}
 	\caption{Inference speeds of all methods.}
-\end{table}
-The inference speed was measured as a sum of all processing times that needed to be done before the detection was made simulating real-life application. From the results the 4th channel depth input almost doubles the inference time of YOLOv3, while Sparse to dense network alone performs quite fast. The longest time for inference belongs to Inpaint RGBD method with 0.5424 seconds. 
+\end{table}\\
+The inference speed was measured as a sum of all processing times that needed to be done before the detection was made simulating real-life application. From the results the 4th channel depth input almost doubles the inference time of YOLOv3, while Sparse to dense network alone performs quite fast. The longest time for inference belongs to Inpaint RGBD method with 0.5424 seconds.\\
+\\
+Overall Raw RGBD provides an increase in mAP and Recall but suffers a decrease in precision. The inference time is longer, which may prove to be a problem in real-life application.\\
+\\
+Inpaint RGBD produces overall better results in every metric compared to RGB but suffers heavily in long inference times, making it unusable in real-life application.\\
+\\
+Sparse to dense RGBD offers a decrease in mAP and Recall but provides overall the best Precison out of any method tested. Sparse to dense network output time is slowing down the inference speed by only a small amount.\\
+\\
+Sparse to dense modified RGBD provides little improvement in terms of mAP  and suffers a decrease in Precision. Out of any other method it provides the highest recall in close detection distances. The modifying algorithm is responsible for a very little slowdown compared to Sparse to dense RGBD.
+\chapter{Conclusion}
+In this thesis four different methods of fusion of RGB data with LiDAR data were proposed and compared. A virtual environments were used for the generation of the dataset. The detection Convolutional neural network was trained from scratch and tested generating various metrics that were compared with RGB data results.\\
+\\
+Following the results fusion LiDAR with RGB into 4-channel RGBD image provides little advantage compared to RGB image alone. The inference speed suffers a big decrease making RGBD images little usage in real-life situations. 
 \bibliographystyle{amsalpha}
 \bibliography{ctutest}
 \end{document}
