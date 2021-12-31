@@ -1,67 +1,110 @@
-\newcommand{\etalchar}[1]{$^{#1}$}
-\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
-\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
-% \MRhref is called by the amsart/book/proc definition of \MR.
-\providecommand{\MRhref}[2]{%
-  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
-}
-\providecommand{\href}[2]{#2}
-\begin{thebibliography}{KNF{\etalchar{+}}14}
+\begin{thebibliography}{10}
 
-\bibitem[BGL{\etalchar{+}}18]{drone-det-wifi}
-Igor Bisio, Chiara Garibotto, Fabio Lavagetto, Andrea Sciarrone, and Sandro
-  Zappatore, \emph{Unauthorized amateur uav detection based on wifi statistical
-  fingerprint analysis}, IEEE Communications Magazine \textbf{56} (2018),
-  106--111.
+\bibitem{ma2018sparsetodense}
+F.~Ma and S.~Karaman, ``Sparse-to-dense: Depth prediction from sparse depth
+  samples and a single image,'' 2018.
 
-\bibitem[Kat18]{kathuria_2018}
-Ayoosh Kathuria, \emph{What's new in yolo v3?}, Apr 2018.
+\bibitem{kathuria_2018}
+A.~Kathuria, ``What's new in yolo v3?,'' Apr 2018.
 
-\bibitem[KNF{\etalchar{+}}14]{cite:2}
-Tom\'{a}\v{s} Krajn\'{\i}k, Mat\'{\i}as Nitsche, Jan Faigl, Petr Vanundefinedk,
-  Martin Saska, Libor P\v{r}eu\v{c}il, Tom Duckett, and Marta Mejail, \emph{A
-  practical multirobot localization system}, J. Intell. Robotics Syst.
-  \textbf{76} (2014), no.~3–4, 539–562.
+\bibitem{cite:5}
+A.~C. Telea, ``An image inpainting technique based on the fast marching
+  method,'' {\em Journal of Graphics Tools}, vol.~9, pp.~23 -- 34, 2004.
 
-\bibitem[LHK16]{cite:4}
-Seoungjun Lee, Dongsoo Har, and Dongsuk Kum, \emph{Drone-assisted disaster
-  management: Finding victims via infrared camera and lidar sensor fusion},
-  2016 3rd Asia-Pacific World Congress on Computer Science and Engineering
-  (APWC on CSE), 2016, pp.~84--89.
+\bibitem{opencv}
+``Camera calibration and 3d reconstruction.''
 
-\bibitem[MK18]{ma2018sparsetodense}
-Fangchang Ma and Sertac Karaman, \emph{Sparse-to-dense: Depth prediction from
-  sparse depth samples and a single image}, 2018.
+\bibitem{parrot}
+P.~Martinez, {\em Vision-based Algorithms for UAV Mimicking Control System}.
+\newblock PhD thesis, 11 2017.
 
-\bibitem[ope]{opencv}
-\emph{Camera calibration and 3d reconstruction}.
+\bibitem{cite:1}
+M.~Vrba, D.~Heřt, and M.~Saska, ``Onboard marker-less detection and
+  localization of non-cooperating drones for their safe interception by an
+  autonomous aerial system,'' {\em IEEE Robotics and Automation Letters},
+  vol.~4, no.~4, pp.~3402--3409, 2019.
 
-\bibitem[RDGF16]{redmon2016look}
-Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi, \emph{You only
-  look once: Unified, real-time object detection}, 2016.
+\bibitem{cite:2}
+T.~Krajn\'{\i}k, M.~Nitsche, J.~Faigl, P.~Vanundefinedk, M.~Saska,
+  L.~P\v{r}eu\v{c}il, T.~Duckett, and M.~Mejail, ``A practical multirobot
+  localization system,'' {\em J. Intell. Robotics Syst.}, vol.~76,
+  p.~539–562, dec 2014.
 
-\bibitem[RF18]{redmon2018yolov3}
-Joseph Redmon and Ali Farhadi, \emph{Yolov3: An incremental improvement}, 2018.
+\bibitem{cite:3}
+A.~Tahir, J.~Böling, M.-H. Haghbayan, H.~T. Toivonen, and J.~Plosila, ``Swarms
+  of unmanned aerial vehicles — a survey,'' {\em Journal of Industrial
+  Information Integration}, vol.~16, p.~100106, 2019.
 
-\bibitem[SYX{\etalchar{+}}18]{8337899}
-Xiufang Shi, Chaoqun Yang, Weige Xie, Chao Liang, Zhiguo Shi, and Jiming Chen,
-  \emph{Anti-drone system with multiple surveillance technologies:
-  Architecture, implementation, and challenges}, IEEE Communications Magazine
-  \textbf{56} (2018), no.~4, 68--74.
+\bibitem{cite:4}
+S.~Lee, D.~Har, and D.~Kum, ``Drone-assisted disaster management: Finding
+  victims via infrared camera and lidar sensor fusion,'' in {\em 2016 3rd
+  Asia-Pacific World Congress on Computer Science and Engineering (APWC on
+  CSE)}, pp.~84--89, 2016.
 
-\bibitem[TBH{\etalchar{+}}19]{cite:3}
-Anam Tahir, Jari Böling, Mohammad-Hashem Haghbayan, Hannu~T. Toivonen, and
-  Juha Plosila, \emph{Swarms of unmanned aerial vehicles — a survey}, Journal
-  of Industrial Information Integration \textbf{16} (2019), 100106.
+\bibitem{9553611}
+H.~Kramer, S.~Mücher, and H.~van~der Hagen, ``Hotspot vegetation structure and
+  terrain monitoring of dutch coastal dunes with lidar and optical camera's
+  mounted on drones,'' in {\em 2021 IEEE International Geoscience and Remote
+  Sensing Symposium IGARSS}, pp.~739--742, 2021.
 
-\bibitem[Tel04]{cite:5}
-Alexandru~Cristian Telea, \emph{An image inpainting technique based on the fast
-  marching method}, Journal of Graphics Tools \textbf{9} (2004), 23 -- 34.
+\bibitem{9554023}
+D.~R. Alves~de Almeida, E.~Broadbent, A.~M. Almeyda~Zambrano, M.~P. Ferreira,
+  and P.~H. Santin~Brancalion, ``Fusion of lidar and hyperspectral data from
+  drones for ecological questions: The gatoreye atlantic forest restoration
+  case study,'' in {\em 2021 IEEE International Geoscience and Remote Sensing
+  Symposium IGARSS}, pp.~714--715, 2021.
 
-\bibitem[VHS19]{cite:1}
-Matouš Vrba, Daniel Heřt, and Martin Saska, \emph{Onboard marker-less
-  detection and localization of non-cooperating drones for their safe
-  interception by an autonomous aerial system}, IEEE Robotics and Automation
-  Letters \textbf{4} (2019), no.~4, 3402--3409.
+\bibitem{8337899}
+X.~Shi, C.~Yang, W.~Xie, C.~Liang, Z.~Shi, and J.~Chen, ``Anti-drone system
+  with multiple surveillance technologies: Architecture, implementation, and
+  challenges,'' {\em IEEE Communications Magazine}, vol.~56, no.~4, pp.~68--74,
+  2018.
+
+\bibitem{drone-det-wifi}
+I.~Bisio, C.~Garibotto, F.~Lavagetto, A.~Sciarrone, and S.~Zappatore,
+  ``Unauthorized amateur uav detection based on wifi statistical fingerprint
+  analysis,'' {\em IEEE Communications Magazine}, vol.~56, pp.~106--111, 04
+  2018.
+
+\bibitem{holter2020relative}
+S.~Holter, A.~Tsoukalas, N.~Evangeliou, N.~Giakoumidis, and A.~Tzes, ``Relative
+  visual localization for unmanned aerial systems,'' 2020.
+
+\bibitem{8651535}
+V.~Walter, N.~Staub, A.~Franchi, and M.~Saska, ``Uvdar system for visual
+  relative localization with application to leader–follower formations of
+  multirotor uavs,'' {\em IEEE Robotics and Automation Letters}, vol.~4, no.~3,
+  pp.~2637--2644, 2019.
+
+\bibitem{redmon2018yolov3}
+J.~Redmon and A.~Farhadi, ``Yolov3: An incremental improvement,'' 2018.
+
+\bibitem{zhou2019objects}
+X.~Zhou, D.~Wang, and P.~Krähenbühl, ``Objects as points,'' 2019.
+
+\bibitem{lin2018focal}
+T.-Y. Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Dollár, ``Focal loss for dense
+  object detection,'' 2018.
+
+\bibitem{ren2016faster}
+S.~Ren, K.~He, R.~Girshick, and J.~Sun, ``Faster r-cnn: Towards real-time
+  object detection with region proposal networks,'' 2016.
+
+\bibitem{ali2018yolo3d}
+W.~Ali, S.~Abdelkarim, M.~Zahran, M.~Zidan, and A.~E. Sallab, ``Yolo3d:
+  End-to-end real-time 3d oriented object bounding box detection from lidar
+  point cloud,'' 2018.
+
+\bibitem{redmon2016yolo9000}
+J.~Redmon and A.~Farhadi, ``Yolo9000: Better, faster, stronger,'' 2016.
+
+\bibitem{8988144}
+M.~Vrba and M.~Saska, ``Marker-less micro aerial vehicle detection and
+  localization using convolutional neural networks,'' {\em IEEE Robotics and
+  Automation Letters}, vol.~5, no.~2, pp.~2459--2466, 2020.
+
+\bibitem{redmon2016look}
+J.~Redmon, S.~Divvala, R.~Girshick, and A.~Farhadi, ``You only look once:
+  Unified, real-time object detection,'' 2016.
 
 \end{thebibliography}

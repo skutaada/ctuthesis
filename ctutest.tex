@@ -85,6 +85,7 @@
 
 % Abstract in English
 \begin{abstract-english}
+The detection of drones using neural networks from combined RGB and LiDAR data is tackled in this thesis. Multiple approaches for RGB and LiDAR data fusion are presented. The detection of the drone is realized via a Convolutional neural network. All methods are trained and tested and the results are compared with the RGB only method. 
 \end{abstract-english}
 
 % Acknowledgements / Podekovani
@@ -117,9 +118,16 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 
 \maketitle
 \chapter{Introduction}
-In this thesis a drone detection using neural networks from combined RGB camera and LiDAR data is studied. With the recent development of drone technology, drones have become more readily available to public and could only be expected to rise in popularity in the future. Drone detection is an important problem to tackle when it comes to tasks such as interception of uncooperative drones \cite{cite:1} or localization of drones in swarm \cite{cite:2} \cite{cite:3}. Furthermore Light detection and ranging (LiDAR) sensors mounted on drones have been utilized \cite{cite:4} and provide a viable sensor option. Therefore fusing camera and LiDAR sensor could be used for more accurate localization.\\
-\\
-The goal of this thesis was to examine whether a usage of LiDAR data coupled with RGB images from camera is useful for the localization of drones in contrast to the usage of image data alone.The LiDAR and RGB camera were mounted on top of the observer drone, which took pictures and pointclouds of the target drone. All the measurements were taken inside a virtual environment, with a realistic drone and sensor simulation. The dataset was then processed and used as the input for training and testing a Convolutional neural network for the object detection. The preprocessing was as following:
+In this thesis, drone detection using neural networks from combined RGB camera and LiDAR data is studied. With the recent development of drone technology, drones have become more readily available to the public and could only be expected to rise in popularity in the future. Drone detection is an important problem to tackle when it comes to tasks such as interception of uncooperative drones \cite{cite:1} or localization of drones in swarm \cite{cite:2} \cite{cite:3}. All methods presented in this thesis belong to the relative localization category. Compared to absolute localization methods, relative localization does not need to rely on pre-existing ground infrastructure and can be used in more environments. A Light detecting and ranging (LiDAR) sensor has been utilized on drones on multiple occasions \cite{cite:4} \cite{9553611} \cite{9554023} and RGB camera provides an easily accessible, cheap and lightweight sensor. Therefore a fusion of data retrieved from both sensors and its impact on the overall drone detection problem is an interesting problem to tackle. The results can be useful for occasions where a drone is already equipped with a LiDAR sensor. Or they can provide further clarification, whether the addition of LiDAR sensor into the drone detection problem provides any advantage.
+\section{Related Work}
+Solving the problem of drone detection has been tackled in different ways. They mostly differ from the sensors that are utilized or by placing markers on flying drones.
+\begin{itemize}
+	\item \textbf{Static Sensors} Current State of the art drone detection techniques utilizing static sensors such as Radars, Acoustic sensors or Wi-Fi rely on pre-existing infrastructure. In \cite{8337899} Radar technology faces multiple challenges when detecting smaller aircrafts such as drones, because of their size and altitude of their flight, but shows promising results. When it comes to accoustic sensors, sound of the drone can be a very good source of information but depends heavily on the ambient sound of its environment\cite{8337899}. In \cite{drone-det-wifi} drones are detected using Wi-FI packets that are sent between the drone and its user. This method relies on the fact that most commercially available drones utilize Wi-Fi packets when it comes to communication with the end user. Only presence of the drone in the vicinity can be achieved and not its exact location.
+	\item \textbf{Marker based detection} Part of relative localization techniques utilizes a set of markers that are placed on a target drone. In \cite{holter2020relative} an observer drone utilizing a spherical camera with $360\deg$ Field-of-View detects and localizes drones equipped with markers. This system is applied in real-time and provides accurate localization within 4cm. Another approach is provided in \cite{8651535}, where ultra-violet emitters are equipped on a drone and serve as markers for the detection of the ultra-violet sensor. This approach proved to be successful in real-life situations. The downside of utilizing visual markers on target drones is that a hardware modification of the target drone is required. Therefore this approach is not applicable to all situations, especially when the target drone is not cooperating.
+	\item \textbf{Convolutional neural networks} Due to its popularity and advancements, object detection convolutional neural networks have become a very popular technique for relative drone detection such as YOLOv3 \cite{redmon2018yolov3}, CenterNet \cite{zhou2019objects}, RetinaNet \cite{lin2018focal} and FasterRCNN \cite{ren2016faster}. One approach of using a convolutional neural network is described in \cite{ali2018yolo3d}. This approach is similar to the approach presented in this thesis in the sense that it fuses RGB and LiDAR data and use them as input into the modified YOLOv2 \cite{redmon2016yolo9000} convolutional neural network. This approach represents the LiDAR point cloud as a Birds-eye-view map and outputs 7 degrees of freedom for detected objects. Another approach described in \cite{8988144} uses a convolutional neural network for the use of relative micro aerial vehicle detection. This approach uses tiny-YOLO architecture \cite{redmon2016yolo9000} and estimates the distance of the detected vehicle from the size of its bounding box. The results prove to be applicable in real-world scenarios. For this thesis a YOLOv3 architecture is utilized, due to its speed and simplicity making it easier for utilization of LiDAR data.
+\end{itemize}
+\section{Problem Statement}
+The goal of this thesis was to examine whether a usage of LiDAR data coupled with RGB images from camera is useful for the localization of drones in contrast to the usage of image data alone.The LiDAR and RGB camera were mounted on top of the observer drone, which took pictures and pointclouds of the target drone. All the measurements were taken inside a virtual environment, with a realistic drone and sensor simulation. The dataset was then processed and used as the input for training and testing a Convolutional neural network for the object detection as can be seen in \autoref{fig:intro}. The preprocessing was as following:
 \begin{itemize}
 	\item Coordinate transformation for the non-matching coordinate systems,
 	\item Projection of 3d points into a 2d image,
@@ -127,28 +135,34 @@ The goal of this thesis was to examine whether a usage of LiDAR data coupled wit
 	\item Fusing RGB images and LiDAR data into RGBD images.
 \end{itemize}
 The output metrics were then compared with the RGB trained convolutional neural network metrics.
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{intro_schemav2.png}
 	\caption{Schema of the process.}
+	\label{fig:intro}
 \end{figure}
-\section{Related Work}
-Solving the problem of drone detection has been tackled in different ways. They mostly differ from the sensors that are utilized or by placing markers on flying drones.\\
-\\
-\begin{itemize}
-	\item \textbf{Static Sensors} Current State of the art drone detection techniques utilizing static sensors such as Radars, Acoustic sensors or Wi-Fi rely on pre-existing infrastructure. In \cite{8337899} Radar technology faces multiple challenges when detecting smaller aircrafts such as drones, because of their size and altitude of their flight, but shows promising results. When it comes to accoustic sensors, sound of the drone can be a very good source of information but depends heavily on the ambient sound of its environment\cite{8337899}. In \cite{drone-det-wifi} drones are detected using Wi-FI packets that are sent between the drone and its user. This method relies on the fact that most commercially available drones utilize Wi-Fi packets when it comes to communication with the end user. Only presence of the drone in the vicinity can be achieved and not its exact location.
-	\item \textbf{Camera} RGB camera provides a more lightweight and cheap alternative to static sensors. Due to popularity and development of Convolutional Neural Networks 
-\end{itemize}
+
 \chapter{Methodology}
-In this chapter various methods used in this thesis are discussed. A video game engine Unreal Engine\footnote{\url{https://www.unrealengine.com}}paired with plugin AirSim\footnote{\url{https://microsoft.github.io/AirSim/}} was used for simulating real-life environments and for generating the dataset. An image inpainting technique was used as an option for transforming sparse LiDAR pointcloud into a dense one. A convolutional neural network was used in two problems in the thesis. First one was on a sparse LiDAR pointcloud generating more points and therefore making it more dense. Second one was used for object, in this case drone, detection using RGB and RGBD data as the input.
+In this chapter various methods used in this thesis are discussed. A video game engine Unreal Engine\footnote{\url{https://www.unrealengine.com}}paired with plugin AirSim\footnote{\url{https://microsoft.github.io/AirSim/}} was used for simulating real-life environments and for generating the dataset.\\
+\\
+One approach in this thesis was to input generated RGB data from the dataset and use it as an input into the YOLOv3 Convolutional neural network for drone detection.\\
+\\
+Another approach was to use Sparse to dense Convolutional neural network, which takes sparse LiDAR pointcloud and RGB image as an input and outputs dense LiDAR pointcloud. The neural network was pre-trained and its output was concatenated with RGB images and used as an input into the YOLOv3  for drone detection\\
+\\
+Another approach was to use the output of Sparse to dense network and further process the data, eliminating sections of the depth image that were very sparse and using the output concatenated with RGB images to use as input for YOLOv3.\\
+\\
+A separate approach was to use inpainting method from OpenCV Python library, which takes sparse LiDAR pointcloud and fills in unknown values based on the nearby known values, outputting dense pointcloud. The output of the inpaint method is further processed to filter inpainted values that were very far from known values and concatenated with RGB images to use as an input into YOLOv3.\\
+\\
+Final approach was to concatenate sparse LiDAR pointcloud with RGB images and use as an input into YOLOv3.
 \section{Sparse to dense} \label{s2d}
 Sparse to dense is a Convolutional neural network written in PyTorch. \cite{ma2018sparsetodense} It predicts the depth measurements from sparse depth dataset. The size of the network is modifiable and can be chosen as training parameters.
-\begin{figure}[h]
+\begin{figure}
 	\caption{Example of different network architectures available. Taken from \cite{ma2018sparsetodense}.}
 	\includegraphics[width=\textwidth]{sparse2dense.png}
 	\centering
+	\label{fig:s2d_model}
 \end{figure}
-For the encoding and therefore input layers a ResNet-50 or ResNet-18 can be chosen, depending on the size of the input image for memory constraints. The decoding layers consist of 4 upsampling layers and a deconvolutional layer with either stride 2 or 3 or uprojection layer or upconvolutional layer as a choice for training. The default loss function is least absolute deviations also known as $L_1$ error:
+For the encoding and therefore input layers a ResNet-50 or ResNet-18 can be chosen, depending on the size of the input image for memory constraints as can be seen in \autoref{fig:s2d_model}. The decoding layers consist of 4 upsampling layers and a deconvolutional layer with either stride 2 or 3 or uprojection layer or upconvolutional layer as a choice for training. The default loss function is least absolute deviations also known as $L_1$ error:
 \begin{equation}
 	L_1=\sum_{i=1}^{n}|y_{true}-y_{predicted}|,
 \end{equation}
@@ -180,11 +194,12 @@ During training several input data augmentations take place. These augmentations
 \end{itemize}
 The output of the network is a dense depth image with the dimensions of the input. Every pixel contains predicted depth measurement in meters. The output of the Sparse to Dense network will be used for further training later.
 \section{YOLOv3}
-You only look once (YOLO) is a convolutional neural network model used mainly for object detection and recognition\cite{redmon2016look}. The main advantage is its simplicity in comparison to similar convolutional neural networks, resulting in faster detection speeds. It belongs to the state of the art convolutional neural networks for object detection and recognition. The version used in this work is the third version YOLOv3\cite{redmon2018yolov3}. The backbone called Darknet53 consists of 53 convolutional layers. The original detector consists of 3 detection layers each responsible for detecting objects of various sizes. 
-\begin{figure}[h]
+You only look once (YOLO) is a convolutional neural network model used mainly for object detection and recognition\cite{redmon2016look}. The main advantage is its simplicity in comparison to similar convolutional neural networks, resulting in faster detection speeds. It belongs to the state of the art convolutional neural networks for object detection and recognition. The version used in this work is the third version YOLOv3\cite{redmon2018yolov3}. The backbone called Darknet53 consists of 53 convolutional layers. The original detector consists of 3 detection layers each responsible for detecting objects of various sizes as referred in \autoref{fig:yolov3_model}. 
+\begin{figure}
 	\caption{YOLOv3 network architecture. Taken from \cite{kathuria_2018}}
 	\centering
 	\includegraphics[width=\textwidth]{yolov3_model.png}
+	\label{fig:yolov3_model}
 \end{figure}
 At each detection layer, the image is divided into multiple grid cells, where each grid cell detects three bounding boxes. YOLOv3 takes $n$-channel images as the input. Each of the detection layers outputs three bounding boxes for each of the cell. The content of one bounding box is as following:
 \begin{itemize}
@@ -218,44 +233,59 @@ where:
 	\item $\mathbf{\hat{t}}$ is vector of predicted bounding box co-ordinates,
 	\item $\mathbf{t}$ is vector of ground truth bounding box coordinates which can be obtained by inverting transformation in \ref{bbox}.
 \end{itemize}
+YOLOv3 PyTorch implementation was used for training\footnote{\url{https://github.com/eriklindernoren/PyTorch-YOLOv3}}. Further modifications were required to be made. The original implementation of YOLOv3 supports 3-channel RGB images as inputs. For the sake of this work a RGBD input option using H5 file system was implemented. The dataset consisted of drones of various sizes ranging from very small (few pixels) to very large closeups. Therefore 5 detection heads were implemented instead of the original 3. This ensured much higher detection confidence of smaller far away drones as well as bigger more close ones.
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{02167.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{02665.png}
+	\end{subfigure}
+	\caption{Sample YOLOv3 outputs.}
+\end{figure}
 \section{Image inpainting method based on the Fast Marching Method} \label{inpainting}
-Image inpainting is a method used for reconstructing missing values in the image. A one such method based on \cite{cite:5} called Image inpainting method based in the Fast Marching Method is presented in this section. A grayscale image is used for simplification purposes.\\
+Image inpainting is a method used for reconstructing missing values in the image. A one such method based on \cite{cite:5} called Image inpainting method based in the Fast Marching Method is presented in this section. A depth image is provided as the input. The same method can be extended for RGB images, but won't be needed for this thesis\\
 \\
 The grayscale value of a pixel to be inpainted is determined by the known neighboring pixel values. To compute grayscale value from one close pixel a following formula is used:
 \begin{equation} \label{eq:1}
-	I_q(p)=I(q)+\nabla I(q)(p-q),
+	I_q(\mathbf{p})=I(\mathbf{q})+\mathbf{\nabla I(q)}\cdot(\mathbf{p}-\mathbf{q}),
 \end{equation}
 where:
 \begin{itemize}
-	\item $q$ are pixel co-ordinates with known grayscale value,
-	\item $p$ are pixel co-ordinates with unknown grayscale value,
-	\item $I(x)$ is a grayscale value at pixel co-ordinates $x$,
-	\item $\nabla I(x)$ is a gradient value at pixel co-ordinates $x$.
+	\item $\mathbf{q}$ is a vector of pixel coordinates with known depth value,
+	\item $\mathbf{p}$ is a vector of pixel coordinates with unknown depth value,
+	\item $I(x)$ is a depth value at pixel coordinates $\mathbf{x}$,
+	\item $\mathbf{\nabla I(x)}$ is a gradient vector at pixel coordinates $\mathbf{x}$.
 \end{itemize}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=10cm]{inpaint_principle.png}
+	\includegraphics[width=9cm]{inpaint_principle.png}
 	\caption{Inpainting principle. Image from: \cite{cite:5}}
+	\label{fig:inpaint_schema}
 \end{figure}
-To get a final value for the unknown pixel the Equation \ref{eq:1} is applied on all known pixels in a specified region $B_{\varepsilon}(p)$ from the unknown pixel. The function is as following:
+To get a final value for the unknown pixel the Equation \ref{eq:1} is applied on all known pixels in a specified region $B_{\varepsilon}(p)$ from the unknown pixel as can be seen in  \autoref{fig:inpaint_schema}. The function is as following:
 \begin{equation}\label{inpaint_eq}
-	I(p)=\frac{\sum_{q\in B_{\varepsilon}(p)}w(p,q)I_q(p)}{\sum_{q\in B_{\varepsilon}(p)}w(p,q)},
+	I(\mathbf{p})=\frac{\sum_{\mathbf{q}\in B_{\varepsilon}(\mathbf{p})}w(\mathbf{p},\mathbf{q})I_{\mathbf{q}}(\mathbf{p})}{\sum_{\mathbf{q}\in B_{\varepsilon}(\mathbf{p})}w(\mathbf{p},\mathbf{q})},
 \end{equation}
-where $w(p,q)$ is a weighting function designed for propagating sharpness of the image and is obtained as the product of the following equations:
+where $w(\mathbf{p},\mathbf{q})$ is a weighting function designed for propagating sharpness of the image and is obtained as the product of the following equations:
 \begin{equation}
 	\begin{aligned}
-		dir(p,q)&=\frac{p-q}{||p-q||}N(p),\\
-		dst(p,q)&=\frac{1}{||p-q||^2},\\
-		lev(p,q)&=\frac{1}{1+|T(p)-T(q)|},
+		dir(\mathbf{p},\mathbf{q})&=\frac{\mathbf{p}-\mathbf{q}}{||\mathbf{p}-\mathbf{q}||}\cdot\mathbf{N(p)},\\
+		dst(\mathbf{p},\mathbf{q})&=\frac{1}{||\mathbf{p}-\mathbf{q}||^2},\\
+		lev(\mathbf{p},\mathbf{q})&=\frac{1}{1+|T(\mathbf{p})-T(\mathbf{q})|},
 	\end{aligned}
 \end{equation}
 where,
 \begin{itemize}
-	\item $N(x)$ is a normal direction of the boundary to be inpainted at pixel co-ordinates $x$,
-	\item $T(x)$ is distance of pixel $x$ to the inpainting boundary.
+	\item $\mathbf{N(x)}$ is a normal vector of the boundary to be inpainted at pixel $\mathbf{x}$,
+	\item $T(x)$ is distance of pixel $\mathbf{x}$ to the inpainting boundary.
 \end{itemize}
-The equation \ref{inpaint_eq} is iteratively applied to all pixels on the inpainting boundary, and advances inside the region to be inpainted until the whole region has been filled. This is implemented via Fast Marching Method algorithm.
-\begin{figure}[h!]
+The \eqref{inpaint_eq} is iteratively applied to all pixels on the inpainting boundary, and advances inside the region to be inpainted until the whole region has been filled. This is implemented via Fast Marching Method algorithm.
+\begin{figure}
 	\caption{Example of the inpainting technique. Image from: \cite{cite:5}}
 	\includegraphics[width=10cm]{inpaint_example.png}
 	\centering
@@ -271,10 +301,11 @@ where:
 	\item $\textbf{T}_{os}^{o}$ is transformation from the starting point of the  to the body of the first drone,
 	\item $\textbf{T}_{o}^{c}$ is transformation from the body of the first drone to the cameras coordinate system.
 \end{itemize}
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{coord_schema.png}
 	\caption{Visualization of transformation.}
+	\label{fig:trans}
 \end{figure}
 Transformation matrix $\textbf{T}$ is generally be described as follows:
 \begin{equation}
@@ -289,9 +320,13 @@ where:
 	\item $\textbf{p}$ is a 3x1 translation column vector,
 	\item $\textbf{0}^T$ is a 1x3 row vector of zeros.
 \end{itemize}
+To transform a location of the drone represented by vector $\mathbf{v_{ts}}$ into the coordinate system of the camera, as can be seen in \autoref{fig:trans}, the following transformation is applied:
+\begin{equation}
+	\mathbf{v_c}=\mathbf{T}\mathbf{v_{ts}}
+\end{equation}
 \section{Camera Model} \label{sec:camera-model}
 For the creation of the bounding boxes used for training and for processing raw data from LiDAR sensor a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used.
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{pinhole_camera_model.png}
 	\caption{Pinhole camera model. Image from \cite{opencv}.}
@@ -314,27 +349,6 @@ where:
 	\item $f$ is focal length of the camera,
 	\item $c_x$,$c_y$ are offsets on the image plane.
 \end{itemize}
-In order to transform the point from world coordinates $X_w,Y_w,Z_w$ to the coordinate system of the camera a following transformation needs to be applied:
-\begin{equation} \label{eq:3}
-	\begin{bmatrix}
-		X_c\\
-		Y_c\\
-		Z_c\\
-		1
-	\end{bmatrix}=
-	\begin{bmatrix}
-		0 & 1 & 0 & 0\\
-		0 & 0 & 1 & 0\\
-		1 & 0 & 0 & 0\\
-		0 & 0 & 0 & 1\\
-	\end{bmatrix}
-	\begin{bmatrix}
-		X_w\\
-		Y_w\\
-		Z_w\\
-		1
-	\end{bmatrix}
-\end{equation}
 Pinhole camera model is only idealization of a real life camera and no lens distortion needs to be considered. The AirSim simulator simulates pinhole camera so no other processing needs to be done.
 \section{Dataset}
 The dataset for this work can be generated in two ways. The first is real-life drone shots mixed with point clouds from LiDAR mounted on top of a drone. The second is generating a dataset using a realistic virtual environment where a drone, camera and LiDAR are being emulated very close to their real-life counterparts. An advantage to this approach is that a great variety of environments can be chosen a lot of them often inaccessible otherwise (power plant, airport, snowy mountains out of season etc.). Therefore this approach was chosen for the task.
@@ -345,14 +359,20 @@ Unreal Engine is a software tool used for creating realistic 3d environments, mo
 	\item Automotive Winter Scene (1813 samples taken),
 	\item Downtown West Modular Pack(1120 samples taken).
 \end{itemize}
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{unreal_ui.png}
 	\caption{Unreal Engine user interface.}
 \end{figure}
-Together 5320 pictures and labels were generated using two drones. Observer drone was equipped with RGB camera and LiDAR sensor and was responsible for taking the pictures and pointclouds from LiDAR. The target drone was used as a model for drone detection.
+Together 5320 pictures and labels were generated using two drones. Observer drone was equipped with RGB camera and LiDAR sensor and was responsible for taking the pictures and pointclouds from LiDAR. The Parrot AR.Drone 2.0 shown in \autoref{fig:parrot} was used as a model for drone detection.
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{parrot.png}
+	\caption{Parrot AR.Drone 2.0. Image taken from \cite{parrot}.}
+	\label{fig:parrot}
+\end{figure}
 \subsection{AirSim}
-Open-source plugin for Unreal Engine called AirSim was used for the generation of the dataset. It simulates realistic flight motions of drones as well as seven types of sensors, including RGB camera and LiDAR used for this task. AirSim supports both a C++ API as well as Python API, latter which was used for controlling the motion and capturing the dataset. Location of the second drone was generated through API call, which produces a location of the drone in local coordinates relative to its starting point, which is later transformed to the local coordinates of the first drone carrying the LiDAR and RGB sensors using \autoref{eq:3} and \autoref{eq:2}. The bounding box required for the Convolutional neural network was generated the same way but the edge points of 3D bounding box were transformed using \autoref{eq:3} and \autoref{eq:2}. The bounding box dimensions were set to $(0.6, 1.0, 0.3)$. The LiDAR pointcloud was generated via API call, which returned 3D pointcloud in relation to the observer drone. Therefore transformation \autoref{eq:3} and \autoref{eq:2} were utilized. The capturing drone traveled on each map on a 3D cube grid.
+Open-source plugin for Unreal Engine called AirSim was used for the generation of the dataset. It simulates realistic flight motions of drones as well as seven types of sensors, including RGB camera and LiDAR used for this task. AirSim supports both a C++ API as well as Python API, latter which was used for controlling the motion and capturing the dataset. Location of the second drone was generated through API call, which produces a location of the drone in local coordinates relative to its starting point, which is later transformed to the local coordinates of the first drone carrying the LiDAR and RGB sensors using \eqref{eq:2}. The bounding box required for the Convolutional neural network was generated the same way but the edge points of 3D bounding box were transformed using \eqref{eq:2}. The bounding box dimensions were set to $(0.6, 1.0, 0.3)$. The LiDAR pointcloud was generated via API call, which returned 3D pointcloud in relation to the observer drone. Therefore transformation \eqref{eq:2} was utilized. The capturing drone traveled on each map on a 3D cube grid.
 \begin{figure}
 	\centering
 	\begin{subfigure}[b]{0.3\textwidth}
@@ -435,44 +455,13 @@ An alternative algorithm for making sparse pointcloud into dense one was applied
 	\caption{Inpaint results.}
 \end{figure}
 \subsection{YOLOv3}
-Multiple different options of input to the YOLOv3 networks were applied. These include:
-\begin{itemize}
-	\item Concatenating the direct output of Sparse to dense neural network with the RGB images creating a RGBD image,
-	\item Concatenating the modified Sparse to dense output with the RGB images creating RGBD image,
-	\item Using OpenCV library to directly impaint the sparse depth image,
-	\item Concatenating raw LiDAR pointcloud to the RGB image
-	\item Using only the RGB image skipping the depth entirely.
-\end{itemize}
-YOLOv3 PyTorch implementation was used for training\footnote{\url{https://github.com/eriklindernoren/PyTorch-YOLOv3}}. Further modifications were required to be made. The original implementation of YOLOv3 supports 3-channel RGB images as inputs. For the sake of this work a RGBD input option using H5 file system was implemented. The dataset consisted of drones of various sizes ranging from very small (few pixels) to very large closeups. Therefore 5 detection heads were implemented instead of the original 3. This ensured much higher detection confidence of smaller far away drones as well as bigger more close ones. The following parameters were used for training all inputs:
+The following parameters were used for training all inputs:
 \begin{itemize}
 	\item Number of epochs was set to 120,
 	\item Batch size was set to 128,
 	\item Size of the input images was 416x416x$n$, where $n\in\{3,4\}$,
 	\item Learning rate was set to 0.001.
 \end{itemize}
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}[b]{0.4\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{01640.png}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.4\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{02002.png}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.4\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{02167.png}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.4\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{02665.png}
-	\end{subfigure}
-	\caption{Sample YOLOv3 outputs.}
-\end{figure}
 \chapter{Results}
 After the training completed the different metrics on the validation dataset were compared. These metrics include:
 \begin{itemize}
@@ -496,7 +485,7 @@ where:
 	\item $AP$ is Average Precision, an area under the Precision Recall curve.
 \end{itemize}
 In this case the dataset consisted of only one class, which is drone. Therefore $mAP=AP$.
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
@@ -509,14 +498,15 @@ In this case the dataset consisted of only one class, which is drone. Therefore 
 	\end{subfigure}
 	\caption{Training results}
 \end{figure}
-For the training results validation mAP followed the training loss and started converging after around 8th epoch. It fully stopped rising after 12th epoch. Considering this the chosen weights ensured that the network does not overfit the training and validating dataset. For each input following weights were chosen:
-\begin{table}[h]
+For the training results validation mAP followed the training loss and started converging after around 8th epoch. It fully stopped rising after 12th epoch. Considering this the chosen weights ensured that the network does not overfit the training and validating dataset. \autoref{table:weights} shows selected weights for each method.
+\begin{table}
 	\begin{tabular}{|c|c|c|c|c|c|}
 		\hline
 		& \begin{tabular}[c]{@{}c@{}}Raw\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Inpaint\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ modified RGBD\end{tabular} & RGB \\ \hline
 		Weigths{[}epoch{]} & 9                                                  & 9                                                      & 11                                                             & 12                                                                      & 8   \\ \hline
 	\end{tabular}
 	\caption{Chosen weights.}
+	\label{table:weights}
 \end{table}\\
 After the weights were chosen the network was validated on the test dataset. The confidence threshold was chosen to be $0.2$. The results were as following:
 \begin{table}[h]
@@ -531,7 +521,7 @@ After the weights were chosen the network was validated on the test dataset. The
 	\caption{Testing results}
 \end{table}\\
 \pagebreak
-\begin{figure}[h!]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{recall_distance.png}
 	\caption{Recall based on distance of the drone.} \label{fig:recall_distance}
@@ -559,6 +549,6 @@ Sparse to dense modified RGBD provides little improvement in terms of mAP  and s
 In this thesis four different methods of fusion of RGB data with LiDAR data were proposed and compared. A virtual environments were used for the generation of the dataset. The detection Convolutional neural network was trained from scratch and tested generating various metrics that were compared with RGB data results.\\
 \\
 Following the results fusion LiDAR with RGB into 4-channel RGBD image provides little advantage compared to RGB image alone. The inference speed suffers a big decrease making RGBD images little usage in real-life situations. 
-\bibliographystyle{amsalpha}
+\bibliographystyle{ieeetr}
 \bibliography{ctutest}
 \end{document}
