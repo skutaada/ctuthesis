@@ -91,12 +91,14 @@ The detection of drones using neural networks from combined RGB and LiDAR data i
 
 % Acknowledgements / Podekovani
 \begin{thanks}
-Děkuji ČVUT, že mi je tak dobrou \emph{alma mater}.
+I would like to express my utmost gratitude to my supervisor Ing. Matouš Vrba for his guidance and great support during my time writing this thesis.\\
+\\
+I would also like to thank my parents and friends for their huge support and help.
 \end{thanks}
 
 % Declaration / Prohlaseni
 \begin{declaration}
-Prohlašuji, že jsem předloženou práci vypracoval samostatně, a že jsem uvedl veškerou použitou literaturu.
+Prehlasujem, že som predloženú prácu vypracoval samostatne a ,že som uviedol všetku použitú literatúru.
 
 V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \end{declaration}
@@ -186,11 +188,11 @@ where:
 \end{itemize}
 During training several input data augmentations take place. These augmentations include:
 \begin{itemize}
-	\item Scaling the input image by a random number $s\in[1,1.5]$,
-	\item Rotating the input image by a random degree $r\in[-5,5]$,
-	\item Scaling the brightness, contrast and saturation of the RGB component of the image by a random number $k\in[0.6,1.4]$,
-	\item Normalizing the RGB component of the image,
-	\item Flipping the image horizontally with a 50\% chance.
+	\item scaling the input image by a random number $s\in[1,1.5]$,
+	\item rotating the input image by a random degree $r\in[-5,5]$,
+	\item scaling the brightness, contrast and saturation of the RGB component of the image by a random number $k\in[0.6,1.4]$,
+	\item normalizing the RGB component of the image,
+	\item flipping the image horizontally with a 50\% chance.
 \end{itemize}
 The output of the network is a dense depth image with the dimensions of the input. Every pixel contains predicted depth measurement in meters. The output of the Sparse to Dense network will be used for further training later.
 \section{YOLOv3} \label{s:2.2}
@@ -231,7 +233,7 @@ where:
 \begin{itemize}
 	\item $n$ is batch size,
 	\item $\mathbf{\hat{t}}$ is vector of predicted bounding box co-ordinates,
-	\item $\mathbf{t}$ is vector of ground truth bounding box coordinates which can be obtained by inverting transformation in \ref{bbox}.
+	\item $\mathbf{t}$ is vector of ground truth bounding box coordinates which can be obtained by inverting transformation in \eqref{bbox}.
 \end{itemize}
 \section{Image inpainting method based on the Fast Marching Method} \label{inpainting}
 Image inpainting is a method used for reconstructing missing values in the image. One such method based on \cite{cite:5} called the Image inpainting method based in the Fast Marching Method is presented in this section. A depth image is provided as the input. The same method can be extended for RGB images, but won't be needed for this thesis\\
@@ -253,7 +255,7 @@ where:
 	\caption{Inpainting principle. Image from: \cite{cite:5}}
 	\label{fig:inpaint_schema}
 \end{figure}
-To get a final value for the unknown pixel the Equation \ref{eq:1} is applied on all known pixels in a specified region $B_{\varepsilon}(p)$ from the unknown pixel as can be seen in  \autoref{fig:inpaint_schema}. The function is as follows:
+To get a final value for the unknown pixel the Equation \eqref{eq:1} is applied on all known pixels in a specified region $B_{\varepsilon}(p)$ from the unknown pixel as can be seen in  \autoref{fig:inpaint_schema}. The function is as follows:
 \begin{equation}\label{inpaint_eq}
 	I(\mathbf{p})=\frac{\sum_{\mathbf{q}\in B_{\varepsilon}(\mathbf{p})}w(\mathbf{p},\mathbf{q})I_{\mathbf{q}}(\mathbf{p})}{\sum_{\mathbf{q}\in B_{\varepsilon}(\mathbf{p})}w(\mathbf{p},\mathbf{q})},
 \end{equation}
@@ -268,13 +270,14 @@ where $w(\mathbf{p},\mathbf{q})$ is a weighting function designed for propagatin
 where,
 \begin{itemize}
 	\item $\mathbf{N(x)}$ is a normal vector of the boundary to be inpainted at pixel $\mathbf{x}$,
-	\item $T(x)$ is distance of pixel $\mathbf{x}$ to the inpainting boundary.
+	\item $T(\mathbf{x})$ is distance of pixel $\mathbf{x}$ to the inpainting boundary.
 \end{itemize}
-The \eqref{inpaint_eq} is iteratively applied to all pixels on the inpainting boundary and advances inside the region to be inpainted until the whole region has been filled. This is implemented via the Fast Marching Method algorithm.
+The \eqref{inpaint_eq} is iteratively applied to all pixels on the inpainting boundary and advances inside the region to be inpainted until the whole region has been filled. This is implemented via the Fast Marching Method algorithm. Example results of inpainting method can be seen in \autoref{fig:inpaint_ex}
 \begin{figure}
 	\caption{Example of the inpainting technique. Image from: \cite{cite:5}.}
 	\includegraphics[width=10cm]{inpaint_example.png}
 	\centering
+	\label{fig:inpaint_ex}
 \end{figure}
 \section{Coordinate systems}
 To correctly label the data for training, a position of the target drone in relation to the sensor mounted on the observer drone is required. The AirSim API returns the position of each drone in respect to their starting points. The starting point is a point where the drone spawns in the map. Therefore a transformation from the starting point of the target drone to the camera mounted on the observer is required. This transformation is written as follows:
@@ -311,11 +314,12 @@ To transform a location of the drone represented by vector $\mathbf{v_{ts}}$ int
 	\mathbf{v_c}=\mathbf{T}\mathbf{v_{ts}}
 \end{equation}
 \section{Camera Model} \label{sec:camera-model}
-For the creation of the bounding boxes used for training and for processing raw data from LiDAR sensor a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used.
+For the creation of the bounding boxes used for training and for processing raw data from LiDAR sensor a transformation from coordinate system of the camera to the pixel values of the image needs to be defined. For this task a pinhole camera model is used as seen in \autoref{fig:pinhole}
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{pinhole_camera_model.png}
 	\caption{Pinhole camera model. Image from \cite{opencv}.}
+	\label{fig:pinhole}
 \end{figure}\\
 The transformation is then defined as follows:
 \begin{equation} \label{eq:2}
@@ -339,16 +343,17 @@ Pinhole camera model is only idealization of a real life camera and no lens dist
 \section{Dataset} \label{s:2.6}
 The dataset for this work can be generated in two ways. The first is real-life drone shots mixed with point clouds from LiDAR mounted on top of a drone. The second is generating a dataset using a realistic virtual environment where a drone, camera and LiDAR are being emulated very close to their real-life counterparts. An advantage to this approach is that a great variety of environments can be chosen a lot of them often inaccessible otherwise (power plant, airport, snowy mountains out of season etc.). Therefore this approach was chosen for the task.
 \subsection{Unreal Engine}
-Unreal Engine is a software tool used for creating realistic 3d environments, most often used as a video game engine. It is written in C++ and open-source supporting a variety of pre-built environments and assets. For this work three different environments were used for the creation of the dataset:
+Unreal Engine is a software tool used for creating realistic 3d environments, most often used as a video game engine. It is written in C++ and open-source supporting a variety of pre-built environments and assets. Example of Unreal Engine interface can be seen in \autoref{fig:ue_int}. For this work three different environments were used for the creation of the dataset \ref{fig:ue_env}:
 \begin{itemize}
-	\item City Park Environment Collection (2256 samples taken),
-	\item Automotive Winter Scene (1813 samples taken),
-	\item Downtown West Modular Pack(1120 samples taken).
+	\item city Park Environment Collection (2256 samples taken),
+	\item automotive Winter Scene (1813 samples taken),
+	\item downtown West Modular Pack(1120 samples taken).
 \end{itemize}
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{unreal_ui.png}
 	\caption{Unreal Engine user interface.}
+	\label{fig:ue_int}
 \end{figure}
 Together 5320 pictures and labels were generated using two drones. The observer drone was equipped with an RGB camera and LiDAR sensor and was responsible for taking the pictures and pointclouds from LiDAR. The Parrot AR.Drone 2.0 shown in \autoref{fig:parrot} was used as a model for drone detection.
 \begin{figure}
@@ -379,13 +384,14 @@ An open-source plugin for Unreal Engine called AirSim was used for the generatio
 		\caption{Park Environment.}
 	\end{subfigure}
 	\caption{Sample photos from each environment.}
+	\label{fig:ue_env}
 \end{figure}
 \section{Training}
 For training purposes, 5320 samples were taken using the AirSim simulator. Each sample consists of:
 \begin{itemize}
 	\item 640x640 RGB image from the camera,
 	\item 640x640 sparse depth image from the LiDAR sensor,
-	\item Label file containing ground truth bounding boxes co-ordinates.
+	\item label file containing ground truth bounding boxes co-ordinates.
 \end{itemize}
 This dataset was split into 3662 training, 407 validation, 1251 testing samples.
 \subsection{Sparse to Dense}
@@ -426,7 +432,7 @@ A processing algorithm was applied to the output depth map, further filtering po
 	\label{fig:s2d_mod}
 \end{figure}
 \subsection{Image inpainting}
-An alternative algorithm for making sparse pointcloud into dense ones was applied as well. The function is provided in the OpenCV Python library. The input into the function was a sparse depth image, same as for the Sparse to dense network except for the RGB part. The algorithm introduced in \ref{inpainting} was used with the radius of 1 pixel. The results were processed with the same filtering method as for the results of Sparse to dense method. For further training, only the filtered depth map was used.
+An alternative algorithm for making sparse pointcloud into dense ones was applied as well. The function is provided in the OpenCV Python library. The input into the function was a sparse depth image \ref{fig:inpaint_results}, same as for the Sparse to dense network except for the RGB part. The algorithm introduced in \ref{inpainting} was used with the radius of 1 pixel. The results were processed with the same filtering method as for the results of Sparse to dense method. For further training, only the filtered depth map was used.
 \begin{figure}
 	\centering
 	\begin{subfigure}[b]{0.3\textwidth}
@@ -441,6 +447,7 @@ An alternative algorithm for making sparse pointcloud into dense ones was applie
 		\caption{Filtered result.}
 	\end{subfigure}
 	\caption{Inpaint results.}
+	\label{fig:inpaint_results}
 \end{figure}
 \subsection{YOLOv3}
 The following parameters were used for training all inputs:
@@ -464,6 +471,30 @@ YOLOv3 PyTorch implementation was used for training\footnote{\url{https://github
 	\end{subfigure}
 	\caption{Sample YOLOv3 outputs.}
 \end{figure}
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{train_loss.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{validation_mAP.png}
+	\end{subfigure}
+	\caption{Training results}
+	\label{fig:yolo_res}
+\end{figure}
+For the training results \ref{fig:yolo_res} validation mAP followed the training loss and started converging after around the 8th epoch. It fully stopped rising after the 12th epoch. Considering this the chosen weights ensured that the network does not overfit the training and validating dataset. \autoref{table:weights} shows selected weights for each method.
+\begin{table}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		& \begin{tabular}[c]{@{}c@{}}Raw\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Inpaint\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ modified RGBD\end{tabular} & RGB \\ \hline
+		Weigths{[}epoch{]} & 9                                                  & 9                                                      & 11                                                             & 12                                                                      & 8   \\ \hline
+	\end{tabular}
+	\caption{Chosen weights.}
+	\label{table:weights}
+\end{table}
 \chapter{Results}
 After the training was completed the different metrics on the validation dataset were compared. These metrics include:
 \begin{itemize}
@@ -484,34 +515,10 @@ These metrics are given by the following formulas:
 where:
 \begin{itemize}
 	\item $N$ is number of classes,
-	\item $AP$ is Average Precision, an area under the Precision Recall curve.
+	\item $AP$ is Average Precision, which is calculated by plotting Precision against Recall and calculating the area under the resulted curve.
 \end{itemize}
-In this case, the dataset consisted of only one class, which is a drone. Therefore $mAP=AP$.
-\begin{figure}
-	\centering
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{train_loss.png}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.49\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{validation_mAP.png}
-	\end{subfigure}
-	\caption{Training results}
-\end{figure}
-For the training results validation mAP followed the training loss and started converging after around the 8th epoch. It fully stopped rising after the 12th epoch. Considering this the chosen weights ensured that the network does not overfit the training and validating dataset. \autoref{table:weights} shows selected weights for each method.
+In this case, the dataset consisted of only one class, which is a drone. Therefore $mAP=AP$. After the weights were chosen the network was validated on the test dataset. The confidence threshold was chosen to be $0.2$ and IoU threshold was set to $0.5$. These settings showed best overall results for all the methods.
 \begin{table}
-	\begin{tabular}{|c|c|c|c|c|c|}
-		\hline
-		& \begin{tabular}[c]{@{}c@{}}Raw\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Inpaint\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ modified RGBD\end{tabular} & RGB \\ \hline
-		Weigths{[}epoch{]} & 9                                                  & 9                                                      & 11                                                             & 12                                                                      & 8   \\ \hline
-	\end{tabular}
-	\caption{Chosen weights.}
-	\label{table:weights}
-\end{table}\\
-After the weights were chosen the network was validated on the test dataset. The confidence threshold was chosen to be $0.2$. The results were as follows:
-\begin{table}[h]
 	\begin{tabular}{|c|c|c|c|c|c|}
 		\hline
 		Results   & \begin{tabular}[c]{@{}c@{}}Raw\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Inpaint\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ modified RGBD\end{tabular} & RGB  \\ \hline
@@ -521,24 +528,25 @@ After the weights were chosen the network was validated on the test dataset. The
 		IoU       & 0.79                                               & \textbf{0.84}                                          & \textbf{0.84}                                                  & 0.83                                                                    & 0.83 \\ \hline
 	\end{tabular}
 	\caption{Testing results}
-\end{table}\\
-\pagebreak
+	\label{tab:res}
+\end{table}
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{recall_distance.png}
 	\caption{Recall based on distance of the drone.} \label{fig:recall_distance}
-\end{figure}\\
-From the results, Raw RGBD offers the best improvement in terms of mAP by 7\%. Every method except unmodified Sparse to dense offers some improvement in terms of mAP. In terms of precision unmodified Sparse to dense and Inpaint offer improvement over RGB by 13\% and 10\% respectively. Other methods namely Raw RGBD and modified Sparse to dense offer a decrease of 20\% and 19\% respectively. When it comes to recall not a big improvement is made. The best method is Raw RGBD with an increase of 5\% in comparison to RGB. Unmodified Sparse to dense suffers a decrease of 11\% in comparison to RGB, while the remaining methods are unchanged. This can be observed in \autoref{fig:recall_distance} where all methods perform the best in the range from 4 to 19 meters reaching a maximum recall of around 0.95. Modified Sparse to dense offers the highest recall in around 4 meters but starts to fall after 18 meters. Raw RGBD shows a few spikes in the range from around 48 to 55 meters, the highest reaching 0.5 recall. RGB shows a spike at around 67 meters with recall of around 0.7. In terms of IoU, all methods perform very similarly with best-performing methods Inpaint RGBD and unmodified Sparse to dense showing improvement of 1\%.
-\pagebreak
-\begin{table}[h]
+\end{figure}
+From the results \ref{tab:res}, Raw RGBD offers the best improvement in terms of mAP by 7\%. Every method except unmodified Sparse to dense offers some improvement in terms of mAP. In terms of precision unmodified Sparse to dense and Inpaint offer improvement over RGB by 13\% and 10\% respectively. Other methods namely Raw RGBD and modified Sparse to dense offer a decrease of 20\% and 19\% respectively. When it comes to recall not a big improvement is made. The best method is Raw RGBD with an increase of 5\% in comparison to RGB. Unmodified Sparse to dense suffers a decrease of 11\% in comparison to RGB, while the remaining methods are unchanged. This can be observed in \autoref{fig:recall_distance} where all methods perform the best in the range from 4 to 19 meters reaching a maximum recall of around 0.95. Modified Sparse to dense offers the highest recall in around 4 meters but starts to fall after 18 meters. Raw RGBD shows a few spikes in the range from around 48 to 55 meters, the highest reaching 0.5 recall. RGB shows a spike at around 67 meters with recall of around 0.7. In terms of IoU, all methods perform very similarly with best-performing methods Inpaint RGBD and unmodified Sparse to dense showing improvement of 1\%.
+\begin{table}
 	\begin{tabular}{|c|c|c|c|c|c|}
 		\hline
 		Speed       & \begin{tabular}[c]{@{}c@{}}Raw\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Inpaint\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ RGBD\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sparse to dense\\ modified RGBD\end{tabular} & RGB             \\ \hline
 		time{[}ms{]} & 61                                            & 542.4                                                 & 66.9                                                         & 75.9                                                                  & \textbf{39} \\ \hline
 	\end{tabular}
 	\caption{Inference speeds of all methods.}
+	\label{tab:speed}
 \end{table}\\
-The inference speed was measured as a sum of all processing times that needed to be done before the detection was made simulating real-life applications. From the results, the 4th channel depth input almost doubles the inference time of YOLOv3, while Sparse to dense network alone performs quite fast. The longest time for inference belongs to the Inpaint RGBD method with 0.5424 seconds.\\
+\\
+The inference speed \ref{tab:speed} was measured as a sum of all processing times that needed to be done before the detection was made simulating real-life applications. From the results, the 4th channel depth input almost doubles the inference time of YOLOv3, while Sparse to dense network alone performs quite fast. The longest time for inference belongs to the Inpaint RGBD method with 0.5424 seconds.\\
 \\
 Overall Raw RGBD provides an increase in mAP and Recall but suffers a decrease in precision. The inference time is longer, which may prove to be a problem in real-life applications.\\
 \\
