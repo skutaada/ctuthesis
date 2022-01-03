@@ -1,19 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{ma2018sparsetodense}
-F.~Ma and S.~Karaman, ``Sparse-to-dense: Depth prediction from sparse depth
-  samples and a single image,'' 2018.
-
-\bibitem{kathuria_2018}
-A.~Kathuria, ``What's new in yolo v3?,'' Apr 2018.
-
-\bibitem{cite:5}
-A.~C. Telea, ``An image inpainting technique based on the fast marching
-  method,'' {\em Journal of Graphics Tools}, vol.~9, pp.~23 -- 34, 2004.
-
-\bibitem{opencv}
-``Camera calibration and 3d reconstruction.''
-
 \bibitem{parrot}
 P.~Martinez, {\em Vision-based Algorithms for UAV Mimicking Control System}.
 \newblock PhD thesis, 11 2017.
@@ -103,8 +89,23 @@ M.~Vrba and M.~Saska, ``Marker-less micro aerial vehicle detection and
   localization using convolutional neural networks,'' {\em IEEE Robotics and
   Automation Letters}, vol.~5, no.~2, pp.~2459--2466, 2020.
 
+\bibitem{zhang2020listereo}
+J.~Zhang, M.~S. Ramanagopal, R.~Vasudevan, and M.~Johnson-Roberson, ``Listereo:
+  Generate dense depth maps from lidar and stereo imagery,'' 2020.
+
+\bibitem{ma2018sparsetodense}
+F.~Ma and S.~Karaman, ``Sparse-to-dense: Depth prediction from sparse depth
+  samples and a single image,'' 2018.
+
+\bibitem{cite:5}
+A.~C. Telea, ``An image inpainting technique based on the fast marching
+  method,'' {\em Journal of Graphics Tools}, vol.~9, pp.~23 -- 34, 2004.
+
 \bibitem{redmon2016look}
 J.~Redmon, S.~Divvala, R.~Girshick, and A.~Farhadi, ``You only look once:
   Unified, real-time object detection,'' 2016.
+
+\bibitem{kathuria_2018}
+A.~Kathuria, ``What's new in yolo v3?,'' Apr 2018.
 
 \end{thebibliography}
