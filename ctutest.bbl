@@ -1,9 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{parrot}
-P.~Martinez, {\em Vision-based Algorithms for {UAV} Mimicking Control System}.
-\newblock PhD thesis, 11 2017.
-
 \bibitem{cite:1}
 M.~Vrba, D.~Heřt, and M.~Saska, ``Onboard marker-less detection and
   localization of non-cooperating drones for their safe interception by an
@@ -117,5 +113,9 @@ A.~C. Telea, ``An image inpainting technique based on the fast marching
 J.~Redmon, S.~Divvala, R.~Girshick, and A.~Farhadi, ``{You Only Look Once}:
   Unified, real-time object detection,'' in {\em Proceedings of the IEEE
   conference on computer vision and pattern recognition}, pp.~779--788, 2016.
+
+\bibitem{parrot}
+P.~Martinez, {\em Vision-based Algorithms for {UAV} Mimicking Control System}.
+\newblock PhD thesis, 11 2017.
 
 \end{thebibliography}

@@ -13,7 +13,7 @@
 %	mainlanguage = czech,
 	otherlanguages = {slovak,english},
 	title-czech = {Detekce dronů pomocí neuronových sítí z kombinovaných dat RGB kamery a LIDARu},
-	title-english = {Drone detection using neural networks from combined RGB camera and LiDAR data},
+	title-english = {Detection of Drones Using Neural Networks from Combined RGB Camera and LIDAR Data},
 	%subtitle-czech = {Cesta do tajů kdovíčeho},
 %	subtitle-english = {Journey to the who-knows-what wondeland},
 	doctype = B,
@@ -22,7 +22,7 @@
 	department-english = {Department of Cybernetics},
 	author = {Adam Škuta},
 	supervisor = {Ing. Matouš Vrba},
-	supervisor-address = {Ústav X, \\ Uliční 5, \\ Praha 99},
+	supervisor-address = {},
 	supervisor-specialist = {},
 	fieldofstudy-english = {Cybernetics and Robotics},
 	fieldofstudy-czech = {Kybernetika a Robotika},
@@ -96,9 +96,9 @@ I would also like to thank my parents and friends for their huge support and hel
 
 % Declaration / Prohlaseni
 \begin{declaration}
-Prehlasujem, že som predloženú prácu vypracoval samostatne , a že som uviedol všetku použitú literatúru.
+I declare that the presented work was developed independently and that I have listed all sources of information used within it in accordance with the methodical instructions for observing the ethical principles in the preparation of university theses.
 
-V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
+In Prague, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \end{declaration}
 
 % Only for testing purposes
@@ -167,7 +167,7 @@ The final approach is to concatenate sparse LiDAR depthmap with RGB images and u
 \\
 A video game engine Unreal Engine\footnote{\url{https://www.unrealengine.com}}paired with plugin AirSim\footnote{\url{https://microsoft.github.io/AirSim/}} is used for simulating real-life environments and for generating the dataset.
 \section{Sparse-to-dense} \label{s2d}
-Sparse-to-dense \cite{ma2018sparsetodense} is a convolutional neural network with an implementation in PyTorch publicly available. The input into the network is a sparse depthmap and an RGB image and the output is a dense depthmap.  The sparse depthmap is a matrix with few values that have known depth value and the rest are unknowns. In the dense depthmap every value is known. The size of the network is modifiable and can be chosen as a meta-parameter.
+Sparse-to-dense \cite{ma2018sparsetodense} is a convolutional neural network with an implementation in PyTorch publicly available\footnote{\url{https://github.com/fangchangma/sparse-to-dense.pytorch}}. The input into the network is a sparse depthmap and an RGB image and the output is a dense depthmap.  The sparse depthmap is a matrix with few values that have known depth value and the rest are unknowns. In the dense depthmap every value is known. The size of the network is modifiable and can be chosen as a meta-parameter.
 \begin{figure}
 	\caption[Example of different network architectures available.]{Example of different network architectures available. Taken from \cite{ma2018sparsetodense}.}
 	\includegraphics[width=\textwidth]{sparse2dense.png}
@@ -404,7 +404,7 @@ where
 The pinhole camera model is only an idealization of a real life camera and no lens distortion is considered. The AirSim simulator simulates an ideal pinhole camera so no other processing was done for the purposes of this thesis.
 \footnotetext{\url{https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html}}
 \section{Training and testing dataset} \label{s:2.6}
-The dataset in this thesis was used for training and testing of all used approaches for drone detection. It can be generated in two ways. The first is real-life drone shots mixed with pointclouds from LiDAR mounted on top of a drone. The second is generating a dataset using a realistic virtual environment where a drone, camera and LiDAR are being emulated very close to their real-life counterparts. An advantage to this approach is that a great variety of environments can be chosen a lot of them often inaccessible otherwise (power plant, airport, snowy mountains out of season etc.). Therefore, this approach was chosen for the task.
+The dataset in this thesis was used for training and testing of all used approaches for drone detection. It can be generated in two ways. The first is real-life drone shots mixed with pointclouds from LiDAR mounted on top of a drone. The second is generating a dataset using a realistic virtual environment where a drone, camera and LiDAR are being emulated very close to their real-life counterparts. An advantage to this approach is that a great variety of environments can be chosen a lot of them often inaccessible otherwise (power plant, airport, snowy mountains out of season etc.). Therefore, this approach was chosen for the task. The dataset is publicly available online\footnote{\url{https://drive.google.com/file/d/1169jGntZzNYojkDpVVXsOw5izrO1FV0l/view?usp=sharing}}.
 \subsection{Unreal Engine}
 Unreal Engine is a software tool used for creating realistic 3D environments, most often used as a video game engine. It is written in C++ and open-source supporting a variety of pre-built environments and assets. Example of an Unreal Engine interface can be seen in \autoref{fig:ue_int}. For this work, three different environments were used for the creation of the dataset, that are illustrated in \autoref{fig:ue_env}:
 \begin{itemize}
